@@ -31,6 +31,10 @@ Features
 
 Getting started with Slate is super easy! Simply fork this repository and follow the instructions below. Or, if you'd like to check out what Slate is capable of, take a look at the [sample docs](http://lord.github.io/slate).
 
+# [View API Online](https://bluzelle.github.io/api/)
+
+-----------
+
 Getting Started with Slate
 ------------------------------
 
