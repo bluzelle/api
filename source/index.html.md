@@ -1,239 +1,510 @@
 ---
-title: API Reference
+title: Bluzelle API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
+
 
 search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+> This documentation covers our **JavaScript** and **WebSocket** tools.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Bluzelle is a decentralized database that makes it more efficient for blockchain products to manage their data while shifting control to the masses.
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
-# Authentication
+# Getting Bluzelle
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> Our client JavaScript library is indexed and can be installed through `npm`.
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+npm install bluzelle
 ```
+
+> You import *Bluzelle* into your application the same as any other library.
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+const bluzelle = require('bluzelle');
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Our Lovelace release will provide developer tools for **JavaScript**, **NEO**, and **Soliditity**, as well as a generic **WebSocket** interface for communicating with the swarm.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+# JS API
+
+
+
+## connect(ws, uuid)
+
+> Our JavaScript library makes extensive use of <a href="#">JavaScript promises</a> to wrap the underlying request-response architecture.
+
+> You may also use <a href="#">async/await</a> syntax to avoid the use of `then`.
+
+
+```javascript
+
+// promise syntax
+bluzelle.connect('ws://1.1.1.1:8000', UUID)
+  .then(() => console.log('Connection established!'),
+        () => console.log('Connection refused!'));
+
+// async/await syntax
+await bluzelle.connect('ws://1.1.1.1:8000', UUID);
+```
+
+
+Bluzelle uses unique `UUID`'s to identify distinct databases on a single swarm. To connect, pass in the WebSocket address of the entry point and our system will automatically communicate and connect with the distributed swarm.
+
+
+---------
+
+Argument  | Description
+----------|------------
+ws       | The WebSocket entry point to connect to
+uuid     | The unique `uuid` identifier
+
+
+### Returns
+
+Nothing.
+
+
+### Fail Conditions
+
+Fails when a connection could not be established.
+
+<aside class="warning">
+You must replace <code>UUID</code> with your personal UUID identifier.
+</aside>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+This function is an abstraction over establishing a WebSocket connection, and thus does not wrap a particular command in the WebSocket API.
 </aside>
 
-# Kittens
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+## has(key)
 
 ```javascript
-const kittn = require('kittn');
+// promise syntax
+bluzelle.has('mykey').then(hasMyKey => { ... }, error => { ... });
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+// async/await syntax
+const hasMyKey = await bluzelle.has('mykey');
 ```
 
-> The above command returns JSON structured like this:
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+Query to see if a key is in the database.
+
+----------
+  
+Argument  | Description
+----------|------------
+key       | The name of the key to query
+
+
+### Returns
+
+A boolean value, `true` of `false`, representing whether or not the key is in the database.
+
+
+### Fail Conditions
+
+Fails when a response is not received from the connection.
+
+
+
+## keys()
+
+```javascript
+// promise syntax
+bluzelle.keys().then(keys => { ... }, error => { ... });
+
+// async/await syntax
+const keys = await bluzelle.keys();
+```
+
+
+Retrieve a list of all keys.
+
+----------
+  
+Argument  | Description
+----------|------------
+
+
+### Returns
+
+An array of strings representing keys in the database. ex. `["Key1", "Key2", ...]`
+
+
+### Fail Conditions
+
+Fails when a response is not received from the connection.
+
+
+## read(key)
+
+```javascript
+// promise syntax
+bluzelle.read('mykey').then(value => { ... }, error => { ... });
+
+// async/await syntax
+const value = await bluzelle.read('mykey');
+```
+
+
+Retrieve the value of a key.
+
+----------
+  
+Argument  | Description
+----------|------------
+key      |  The key to retrieve.
+
+
+### Returns
+
+The value of the key. This is anything that is valid in the *Bluzelle* database. (See <a href="#update-key-value">`update(key, value)`</a>)
+
+
+### Fail Conditions
+
+Fails when a response is not recieved or the key does not exist in the database.
+
+
+## update(key, value)
+
+```javascript
+// promise syntax
+bluzelle.update('mykey', { a: 13 }).then(() => { ... }, error => { ... });
+
+// async/await syntax
+await bluzelle.update('mykey', { a: 13 });
+```
+
+
+> Serial data example.
+
+```javascript
+
+const arr = new Uint8Array(1000);
+
+arr.fill(4, 200, 400); // Fill 4 in slots 200-400.
+
+await bluzelle.update('mykey', arr.buffer);
+```
+
+
+Update a field in the database. This is also used to create a new field. *Bluzelle* supports JavaScript types that are `JSON`-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.
+
+----------
+  
+Argument  | Description
+----------|------------
+key       | The name of the key to query
+value     | The value to set the key
+
+
+### Returns
+
+Nothing.
+
+
+### Fail Conditions
+
+Fails when a response is not received from the connection or invalid value.
+
+
+
+## delete(key)
+
+
+```javascript
+// promise syntax
+bluzelle.delete('mykey').then(() => { ... }, error => { ... });
+
+// async/await syntax
+await bluzelle.delete('mykey');
+```
+
+
+Deletes a field from the database.
+
+----------
+  
+Argument  | Description
+----------|------------
+key       | The name of the key to delete
+
+
+### Returns
+
+Nothing.
+
+
+### Fail Conditions
+
+Fails when a response is not received from the connection or key not in database.
+
+
+## ping()
+
+
+```javascript
+// promise syntax
+bluzelle.ping().then(() => { ... }, error => { ... });
+
+// async/await syntax
+await bluzelle.ping();
+```
+
+
+Pings the current connection.
+
+----------
+  
+Argument  | Description
+----------|------------
+
+
+### Returns
+
+Nothing.
+
+
+### Fail Conditions
+
+Fails when no response is received.
+
+
+
+# WebSocket API
+
+The *Bluzelle* architecture consists of a request-response system through WebSockets. 
+
+-------
+
+Each WebSocket **request** is a JSON object and may have the following fields:
+
+- `cmd`: The identifier of the request. (ex. `"read"`, `"update"`, ...)
+- `data`: (Optional) Complementary data for the request. The presence/contents of this field depends on the command.
+- `bzn-api`: Used internally by the daemon. Set to constant `"crud"` for this guide.
+- `db-uuid`: The `UUID` for your database.
+- `request-id`: (Optional) An identifier for this request. The value is mirrored in the `response-to` field of the request.
+
+-------
+
+Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object and may have the following fields:
+
+- `data`: (Optional) Complementary data for the response.
+- `response-to`: (Optional) The `request-id` field of the initial request, if present.
+- `error`: (Optional) If present, this is an error string signifying that the request has failed.
+- `redirect`: (Optional) If present, this instructs the client to open a new socket and send the request at the given port and address.
+
+
+<aside class="notice">
+The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</code> strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
+</aside>
+
+
+## read
+
+```json-doc
+
+// Request
+
+{
+  "cmd": "read",
+  "data": {
+    "key": "mykey"
   },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
+  "bzn-api": "crud",
+  "db-uuid": 12345,
+  "request-id": 13
+}
 
-This endpoint retrieves all kittens.
 
-### HTTP Request
+// Response
 
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "data": {
+    "value": "He932NLA"
+  },
+  "response-to": 13
+}
+
+// or
+
+{
+  "error": "Key not in database",
+  "response-to": 13
+}
+
+```
+
+
+Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.
+
+
+## update
+
+```json-doc
+
+// Request
+
+{
+  "cmd": "update",
+  "data": {
+    "key": "mykey",
+    "value": "GNJjA39s"
+  },
+  "bzn-api": "crud",
+  "db-uuid": 12345,
+  "request-id": 45
+}
+
+
+// Response
+
+{
+  "response-to": 45
+}
+
+// or
+
+{
+  "error": "Invalid value",
+  "response-to": 45
+}
+
+```
+
+Updates data to a given key.
+
+
+
+## delete
+
+```json-doc
+
+// Request
+
+{
+  "cmd": "delete",
+  "data": {
+    "key": "mykey",
+  },
+  "bzn-api": "crud",
+  "db-uuid": 12345,
+  "request-id": 45
+}
+
+
+// Response
+
+{
+  "response-to": 45
+}
+
+// or
+
+{
+  "error": "Key not in database",
+  "response-to": 45
+}
+
+```
+
+Deletes a given key.
+
+
+
+
+## has
+
+```json-doc
+
+// Request
+
+{
+  "cmd": "has",
+  "data": {
+    "key": "mykey",
+  },
+  "bzn-api": "crud",
+  "db-uuid": 12345,
+  "request-id": 99
+}
+
+
+// Response
+
+{
+  "data": {
+    "value": true // false
+  },
+  "response-to": 99
+}
+
+```
+
+Query if a key exists in the database.
+
+
+
+## keys
+
+```json-doc
+
+
+// Request
+
+{
+  "cmd": "keys",
+  "bzn-api": "crud",
+  "db-uuid": 12345,
+  "request-id": 45
+}
+
+
+// Response
+
+{
+  "data": {
+    "value": ["key1", "key2", "hello", "world", ...]
+  },
+  "response-to": 45
+}
+
+```
+
+Obtain a list of keys in the database.
+
+
+## ping
+
+```json-doc
+// Request
+
+{
+  "cmd": "ping",
+  "bzn-api": "ping",
+  "request-id": 5
+}
+
+
+// Response
+
+{
+  "response-to": 5
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+Used to verify a connection.
