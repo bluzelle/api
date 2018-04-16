@@ -15,7 +15,7 @@ search: true
 
 > This documentation covers our **JavaScript** and **WebSocket** tools.
 
-Bluzelle is a decentralized database that makes it more efficient for blockchain products to manage their data while shifting control to the masses.
+Bluzelle combines the sharing economy with the token economy - renting individuals' computer storage space to earn tokens while dApp developers use tokens to have their dApp's data stored and managed.
 
 
 # Getting Bluzelle
