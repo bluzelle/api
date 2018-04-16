@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Bluzelle API Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -210,293 +210,480 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
-        <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
-        </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
         <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
-            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+            <a href="#getting-bluzelle" class="toc-h1 toc-link" data-title="getting-bluzelle">Getting Bluzelle</a>
           </li>
           <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#js-api" class="toc-h1 toc-link" data-title="js-api">JS API</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#connect-ws-uuid" class="toc-h2 toc-link" data-title="connect-ws-uuid">connect(ws, uuid)</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#has-key" class="toc-h2 toc-link" data-title="has-key">has(key)</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#keys" class="toc-h2 toc-link" data-title="keys">keys()</a>
+                  </li>
+                  <li>
+                    <a href="#read-key" class="toc-h2 toc-link" data-title="read-key">read(key)</a>
+                  </li>
+                  <li>
+                    <a href="#update-key-value" class="toc-h2 toc-link" data-title="update-key-value">update(key, value)</a>
+                  </li>
+                  <li>
+                    <a href="#delete-key" class="toc-h2 toc-link" data-title="delete-key">delete(key)</a>
+                  </li>
+                  <li>
+                    <a href="#ping" class="toc-h2 toc-link" data-title="ping">ping()</a>
                   </li>
               </ul>
           </li>
           <li>
-            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+            <a href="#websocket-api" class="toc-h1 toc-link" data-title="websocket-api">WebSocket API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#read" class="toc-h2 toc-link" data-title="read">read</a>
+                  </li>
+                  <li>
+                    <a href="#update" class="toc-h2 toc-link" data-title="update">update</a>
+                  </li>
+                  <li>
+                    <a href="#delete" class="toc-h2 toc-link" data-title="delete">delete</a>
+                  </li>
+                  <li>
+                    <a href="#has" class="toc-h2 toc-link" data-title="has">has</a>
+                  </li>
+                  <li>
+                    <a href="#keys-2" class="toc-h2 toc-link" data-title="keys">keys</a>
+                  </li>
+                  <li>
+                    <a href="#ping-2" class="toc-h2 toc-link" data-title="ping">ping</a>
+                  </li>
+              </ul>
           </li>
       </div>
-        <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
-        </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
-
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>This documentation covers our <strong>JavaScript</strong> and <strong>WebSocket</strong> tools.</p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
+<p>Bluzelle is a decentralized database that makes it more efficient for blockchain products to manage their data while shifting control to the masses.</p>
+<h1 id='getting-bluzelle'>Getting Bluzelle</h1>
+<blockquote>
+<p>Our client JavaScript library is indexed and can be installed through <code>npm</code>.</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>npm install bluzelle
 </code></pre>
 <blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+<p>You import <em>Bluzelle</em> into your application the same as any other library.</p>
 </blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
+</code></pre>
+<p>Our Lovelace release will provide developer tools for <strong>JavaScript</strong>, <strong>NEO</strong>, and <strong>Soliditity</strong>, as well as a generic <strong>WebSocket</strong> interface for communicating with the swarm.</p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
+<h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2>
+<blockquote>
+<p>Our JavaScript library makes extensive use of <a href="#">JavaScript promises</a> to wrap the underlying request-response architecture.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>You may also use <a href="#">async/await</a> syntax to avoid the use of <code>then</code>.</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.1.1.1:8000'</span><span class="p">,</span> <span class="nx">UUID</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Connection established!'</span><span class="p">),</span>
+        <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Connection refused!'</span><span class="p">));</span>
 
-<p><code>Authorization: meowmeowmeow</code></p>
+<span class="c1">// async/await syntax</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.1.1.1:8000'</span><span class="p">,</span> <span class="nx">UUID</span><span class="p">);</span>
+</code></pre>
+<p>Bluzelle uses unique <code>UUID</code>&#39;s to identify distinct databases on a single swarm. To connect, pass in the WebSocket address of the entry point and our system will automatically communicate and connect with the distributed swarm.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ws</td>
+<td>The WebSocket entry point to connect to</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>The unique <code>uuid</code> identifier</td>
+</tr>
+</tbody></table>
+<h3 id='returns'>Returns</h3>
+<p>Nothing.</p>
+<h3 id='fail-conditions'>Fail Conditions</h3>
+<p>Fails when a connection could not be established.</p>
+
+<aside class="warning">
+You must replace <code>UUID</code> with your personal UUID identifier.
+</aside>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+This function is an abstraction over establishing a WebSocket connection, and thus does not wrap a particular command in the WebSocket API.
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='has-key'>has(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">hasMyKey</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="c1">// async/await syntax</span>
+<span class="kr">const</span> <span class="nx">hasMyKey</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
+</code></pre>
+<p>Query to see if a key is in the database.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<hr>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key to query</td>
+</tr>
+</tbody></table>
+<h3 id='returns-2'>Returns</h3>
+<p>A boolean value, <code>true</code> of <code>false</code>, representing whether or not the key is in the database.</p>
+<h3 id='fail-conditions-2'>Fail Conditions</h3>
+<p>Fails when a response is not received from the connection.</p>
+<h2 id='keys'>keys()</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">keys</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">keys</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="kr">const</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span>
+</code></pre>
+<p>Retrieve a list of all keys.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h3 id='returns-3'>Returns</h3>
+<p>An array of strings representing keys in the database. ex. <code>[&quot;Key1&quot;, &quot;Key2&quot;, ...]</code></p>
+<h3 id='fail-conditions-3'>Fail Conditions</h3>
+<p>Fails when a response is not received from the connection.</p>
+<h2 id='read-key'>read(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
+</code></pre>
+<p>Retrieve the value of a key.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The key to retrieve.</td>
+</tr>
+</tbody></table>
+<h3 id='returns-4'>Returns</h3>
+<p>The value of the key. This is anything that is valid in the <em>Bluzelle</em> database. (See <a href="#update-key-value"><code>update(key, value)</code></a>)</p>
+<h3 id='fail-conditions-4'>Fail Conditions</h3>
+<p>Fails when a response is not recieved or the key does not exist in the database.</p>
+<h2 id='update-key-value'>update(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">});</span>
 </code></pre>
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Serial data example.</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+<pre class="highlight javascript tab-javascript"><code>
+<span class="kr">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+
+<span class="nx">arr</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span> <span class="c1">// Fill 4 in slots 200-400.</span>
+
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">buffer</span><span class="p">);</span>
+</code></pre>
+<p>Update a field in the database. This is also used to create a new field. <em>Bluzelle</em> supports JavaScript types that are <code>JSON</code>-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key to query</td>
+</tr>
+<tr>
+<td>value</td>
+<td>The value to set the key</td>
+</tr>
+</tbody></table>
+<h3 id='returns-5'>Returns</h3>
+<p>Nothing.</p>
+<h3 id='fail-conditions-5'>Fail Conditions</h3>
+<p>Fails when a response is not received from the connection or invalid value.</p>
+<h2 id='delete-key'>delete(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
+</code></pre>
+<p>Deletes a field from the database.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key to delete</td>
+</tr>
+</tbody></table>
+<h3 id='returns-6'>Returns</h3>
+<p>Nothing.</p>
+<h3 id='fail-conditions-6'>Fail Conditions</h3>
+<p>Fails when a response is not received from the connection or key not in database.</p>
+<h2 id='ping'>ping()</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">ping</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">ping</span><span class="p">();</span>
+</code></pre>
+<p>Pings the current connection.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h3 id='returns-7'>Returns</h3>
+<p>Nothing.</p>
+<h3 id='fail-conditions-7'>Fail Conditions</h3>
+<p>Fails when no response is received.</p>
+<h1 id='websocket-api'>WebSocket API</h1>
+<p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets. </p>
+
+<hr>
+
+<p>Each WebSocket <strong>request</strong> is a JSON object and may have the following fields:</p>
+
+<ul>
+<li><code>cmd</code>: The identifier of the request. (ex. <code>&quot;read&quot;</code>, <code>&quot;update&quot;</code>, ...)</li>
+<li><code>data</code>: (Optional) Complementary data for the request. The presence/contents of this field depends on the command.</li>
+<li><code>bzn-api</code>: Used internally by the daemon. Set to constant <code>&quot;crud&quot;</code> for this guide.</li>
+<li><code>db-uuid</code>: The <code>UUID</code> for your database.</li>
+<li><code>request-id</code>: (Optional) An identifier for this request. The value is mirrored in the <code>response-to</code> field of the request.</li>
+</ul>
+
+<hr>
+
+<p>Likewise, each WebSocket <strong>response</strong> from a <em>Bluzelle</em> daemon is a JSON object and may have the following fields:</p>
+
+<ul>
+<li><code>data</code>: (Optional) Complementary data for the response.</li>
+<li><code>response-to</code>: (Optional) The <code>request-id</code> field of the initial request, if present.</li>
+<li><code>error</code>: (Optional) If present, this is an error string signifying that the request has failed.</li>
+<li><code>redirect</code>: (Optional) If present, this instructs the client to open a new socket and send the request at the given port and address.</li>
+</ul>
+
+<aside class="notice">
+The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</code> strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
+</aside>
+<h2 id='read'>read</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+</span><span class="c1">// Request</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1">// Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He932NLA"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// or</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
+<p>Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.</p>
+<h2 id='update'>update</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+</span><span class="c1">// Request</span><span class="w">
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GNJjA39s"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+</span><span class="c1">// Response</span><span class="w">
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// or</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid value"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p>Updates data to a given key.</p>
+<h2 id='delete'>delete</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+</span><span class="c1">// Request</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delete"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1">// Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// or</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p>Deletes a given key.</p>
+<h2 id='has'>has</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+</span><span class="c1">// Request</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"has"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1">// Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c1">// false</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p>Query if a key exists in the database.</p>
+<h2 id='keys-2'>keys</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+
+</span><span class="c1">// Request</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keys"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1">// Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"key1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">,</span><span class="w"> </span><span class="c1">...</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p>Obtain a list of keys in the database.</p>
+<h2 id='ping-2'>ping</h2><pre class="highlight json-doc tab-json-doc"><code><span class="c1">// Request</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1">// Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
-</tr>
-</tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
-</tr>
-</tbody></table>
-<h1 id='errors'>Errors</h1>
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request -- Your request sucks.</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
-</tr>
-</tbody></table>
+<p>Used to verify a connection.</p>
 
       </div>
       <div class="dark-box">
-          <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
-          </div>
       </div>
     </div>
   </body>
