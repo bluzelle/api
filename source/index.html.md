@@ -103,7 +103,7 @@ const hasMyKey = await bluzelle.has('mykey');
 Query to see if a key is in the database.
 
 ----------
-  
+
 Argument  | Description
 ----------|------------
 key       | The name of the key to query
@@ -134,7 +134,7 @@ const keys = await bluzelle.keys();
 Retrieve a list of all keys.
 
 ----------
-  
+
 Argument  | Description
 ----------|------------
 
@@ -163,7 +163,7 @@ const value = await bluzelle.read('mykey');
 Retrieve the value of a key.
 
 ----------
-  
+
 Argument  | Description
 ----------|------------
 key      |  The key to retrieve.
@@ -205,7 +205,7 @@ await bluzelle.update('mykey', arr.buffer);
 Update a field in the database. This is also used to create a new field. *Bluzelle* supports JavaScript types that are `JSON`-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.
 
 ----------
-  
+
 Argument  | Description
 ----------|------------
 key       | The name of the key to query
@@ -238,7 +238,7 @@ await bluzelle.delete('mykey');
 Deletes a field from the database.
 
 ----------
-  
+
 Argument  | Description
 ----------|------------
 key       | The name of the key to delete
@@ -269,7 +269,7 @@ await bluzelle.ping();
 Pings the current connection.
 
 ----------
-  
+
 Argument  | Description
 ----------|------------
 
@@ -287,7 +287,7 @@ Fails when no response is received.
 
 # WebSocket API
 
-The *Bluzelle* architecture consists of a request-response system through WebSockets. 
+The *Bluzelle* architecture consists of a request-response system through WebSockets.
 
 -------
 
@@ -326,7 +326,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     "key": "mykey"
   },
   "bzn-api": "crud",
-  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
   "request-id": 13
 }
 
@@ -366,7 +366,7 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
     "value": "GNJjA39s"
   },
   "bzn-api": "crud",
-  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
   "request-id": 45
 }
 
@@ -402,7 +402,7 @@ Updates data to a given key.
     "key": "mykey",
   },
   "bzn-api": "crud",
-  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
   "request-id": 45
 }
 
@@ -439,7 +439,7 @@ Deletes a given key.
     "key": "mykey",
   },
   "bzn-api": "crud",
-  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
   "request-id": 99
 }
 
@@ -469,7 +469,7 @@ Query if a key exists in the database.
 {
   "cmd": "keys",
   "bzn-api": "crud",
-  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
   "request-id": 45
 }
 
