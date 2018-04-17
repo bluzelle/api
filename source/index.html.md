@@ -326,7 +326,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     "key": "mykey"
   },
   "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
   "request-id": 13
 }
 
@@ -366,7 +366,7 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
     "value": "GNJjA39s"
   },
   "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
   "request-id": 45
 }
 
@@ -402,7 +402,7 @@ Updates data to a given key.
     "key": "mykey",
   },
   "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
   "request-id": 45
 }
 
@@ -439,7 +439,7 @@ Deletes a given key.
     "key": "mykey",
   },
   "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
   "request-id": 99
 }
 
@@ -469,7 +469,7 @@ Query if a key exists in the database.
 {
   "cmd": "keys",
   "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
   "request-id": 45
 }
 
