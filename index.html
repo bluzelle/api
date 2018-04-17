@@ -498,7 +498,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <h3 id='fail-conditions-7'>Fail Conditions</h3>
 <p>Fails when no response is received.</p>
 <h1 id='websocket-api'>WebSocket API</h1>
-<p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets. </p>
+<p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
 
 <hr>
 
@@ -535,26 +535,26 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "</span><span class="err">request-id</span><span class="s2">": 13
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
+// Response
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He932NLA"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">data</span><span class="s2">": {
+    "</span><span class="err">value</span><span class="s2">": "</span><span class="err">He</span><span class="mi">932</span><span class="err">NLA</span><span class="s2">"
+  },
+  "</span><span class="err">response-to</span><span class="s2">": 13
+}
 
-</span><span class="c1">// or</span><span class="w">
+// or
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">error</span><span class="s2">": "</span><span class="err">Key</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">database</span><span class="s2">",
+  "</span><span class="err">response-to</span><span class="s2">": 13
+}
 
 </span></code></pre>
 <p>Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.</p>
@@ -568,23 +568,23 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GNJjA39s"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "</span><span class="err">request-id</span><span class="s2">": 45
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
+// Response
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">response-to</span><span class="s2">": 45
+}
 
-</span><span class="c1">// or</span><span class="w">
+// or
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid value"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">error</span><span class="s2">": "</span><span class="err">Invalid</span><span class="w"> </span><span class="err">value</span><span class="s2">",
+  "</span><span class="err">response-to</span><span class="s2">": 45
+}
 
 </span></code></pre>
 <p>Updates data to a given key.</p>
@@ -597,23 +597,23 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "</span><span class="err">request-id</span><span class="s2">": 45
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
+// Response
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">response-to</span><span class="s2">": 45
+}
 
-</span><span class="c1">// or</span><span class="w">
+// or
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">error</span><span class="s2">": "</span><span class="err">Key</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">database</span><span class="s2">",
+  "</span><span class="err">response-to</span><span class="s2">": 45
+}
 
 </span></code></pre>
 <p>Deletes a given key.</p>
@@ -626,19 +626,19 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "</span><span class="err">request-id</span><span class="s2">": 99
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
+// Response
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c1">// false</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">data</span><span class="s2">": {
+    "</span><span class="err">value</span><span class="s2">": true // false
+  },
+  "</span><span class="err">response-to</span><span class="s2">": 99
+}
 
 </span></code></pre>
 <p>Query if a key exists in the database.</p>
@@ -649,19 +649,19 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keys"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814',
+  "</span><span class="err">request-id</span><span class="s2">": 45
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
+// Response
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"key1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">,</span><span class="w"> </span><span class="c1">...</span><span class="p">]</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+  "</span><span class="err">data</span><span class="s2">": {
+    "</span><span class="err">value</span><span class="s2">": ["</span><span class="err">key</span><span class="mi">1</span><span class="s2">", "</span><span class="err">key</span><span class="mi">2</span><span class="s2">", "</span><span class="err">hello</span><span class="s2">", "</span><span class="err">world</span><span class="s2">", ...]
+  },
+  "</span><span class="err">response-to</span><span class="s2">": 45
+}
 
 </span></code></pre>
 <p>Obtain a list of keys in the database.</p>
