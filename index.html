@@ -280,7 +280,7 @@
 <p>This documentation covers our <strong>JavaScript</strong> and <strong>WebSocket</strong> tools.</p>
 </blockquote>
 
-<p>Bluzelle combines the sharing economy with the token economy - renting individuals&#39; computer storage space to earn tokens while dApp developers use tokens to have their dApp&#39;s data stored and managed.</p>
+<p><em>Bluzelle</em> is a decentralized database that makes it more efficient for blockchain products to manage their data while shifting control to the masses.</p>
 <h1 id='getting-bluzelle'>Getting Bluzelle</h1>
 <blockquote>
 <p>Our client JavaScript library is indexed and can be installed through <code>npm</code>.</p>
@@ -297,9 +297,9 @@
 <p>Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
 <h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2>
 <blockquote>
-<p>Our JavaScript library makes extensive use of <a href="#">JavaScript promises</a> to wrap the underlying request-response architecture.</p>
+<p>Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.</p>
 
-<p>You may also use <a href="#">async/await</a> syntax to avoid the use of <code>then</code>.</p>
+<p>You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of <code>then</code>.</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code>
 <span class="c1">// promise syntax</span>
@@ -310,7 +310,7 @@
 <span class="c1">// async/await syntax</span>
 <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.1.1.1:8000'</span><span class="p">,</span> <span class="nx">UUID</span><span class="p">);</span>
 </code></pre>
-<p>Bluzelle uses unique <code>UUID</code>&#39;s to identify distinct databases on a single swarm. To connect, pass in the WebSocket address of the entry point and our system will automatically communicate and connect with the distributed swarm.</p>
+<p><em>Bluzelle</em> uses <code>UUID</code>&#39;s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>. To connect, pass in the WebSocket address of the entry point and our system will automatically communicate and connect with the distributed swarm.</p>
 
 <hr>
 
@@ -326,7 +326,7 @@
 </tr>
 <tr>
 <td>uuid</td>
-<td>The unique <code>uuid</code> identifier</td>
+<td>The universally unique identifier (UUID), <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 is recommended</a></td>
 </tr>
 </tbody></table>
 <h3 id='returns'>Returns</h3>
@@ -335,7 +335,7 @@
 <p>Fails when a connection could not be established.</p>
 
 <aside class="warning">
-You must replace <code>UUID</code> with your personal UUID identifier.
+You must replace <code>UUID</code> with your personal UUID.
 </aside>
 
 <aside class="notice">
@@ -535,7 +535,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -568,7 +568,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GNJjA39s"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -597,7 +597,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -626,7 +626,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -649,7 +649,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keys"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="mi">4982</span><span class="err">e</span><span class="mi">0</span><span class="err">b</span><span class="mi">0-0</span><span class="err">b</span><span class="mi">2</span><span class="err">f</span><span class="mi">-4</span><span class="err">c</span><span class="mi">3</span><span class="err">a-b</span><span class="mi">39</span><span class="err">f</span><span class="mi">-26878</span><span class="err">e</span><span class="mi">2</span><span class="err">ac</span><span class="mi">814</span><span class="p">,</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
