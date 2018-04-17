@@ -15,7 +15,7 @@ search: true
 
 > This documentation covers our **JavaScript** and **WebSocket** tools.
 
-Bluzelle is a decentralized database that makes it more efficient for blockchain products to manage their data while shifting control to the masses.
+*Bluzelle* is a decentralized database that makes it more efficient for blockchain products to manage their data while shifting control to the masses.
 
 
 # Getting Bluzelle
@@ -43,9 +43,9 @@ Each function in the JavaScript API wraps a request-response pair in the WebSock
 
 ## connect(ws, uuid)
 
-> Our JavaScript library makes extensive use of <a href="#">JavaScript promises</a> to wrap the underlying request-response architecture.
+> Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.
 
-> You may also use <a href="#">async/await</a> syntax to avoid the use of `then`.
+> You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of `then`.
 
 
 ```javascript
@@ -60,7 +60,7 @@ await bluzelle.connect('ws://1.1.1.1:8000', UUID);
 ```
 
 
-Bluzelle uses unique `UUID`'s to identify distinct databases on a single swarm. To connect, pass in the WebSocket address of the entry point and our system will automatically communicate and connect with the distributed swarm.
+*Bluzelle* uses `UUID`'s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>. To connect, pass in the WebSocket address of the entry point and our system will automatically communicate and connect with the distributed swarm.
 
 
 ---------
@@ -68,7 +68,7 @@ Bluzelle uses unique `UUID`'s to identify distinct databases on a single swarm. 
 Argument  | Description
 ----------|------------
 ws       | The WebSocket entry point to connect to
-uuid     | The unique `uuid` identifier
+uuid     | The universally unique identifier (UUID), <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 is recommended</a>
 
 
 ### Returns
@@ -81,7 +81,7 @@ Nothing.
 Fails when a connection could not be established.
 
 <aside class="warning">
-You must replace <code>UUID</code> with your personal UUID identifier.
+You must replace <code>UUID</code> with your personal UUID.
 </aside>
 
 <aside class="notice">
@@ -326,7 +326,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
     "key": "mykey"
   },
   "bzn-api": "crud",
-  "db-uuid": 12345,
+  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
   "request-id": 13
 }
 
@@ -366,7 +366,7 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
     "value": "GNJjA39s"
   },
   "bzn-api": "crud",
-  "db-uuid": 12345,
+  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
   "request-id": 45
 }
 
@@ -402,7 +402,7 @@ Updates data to a given key.
     "key": "mykey",
   },
   "bzn-api": "crud",
-  "db-uuid": 12345,
+  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
   "request-id": 45
 }
 
@@ -439,7 +439,7 @@ Deletes a given key.
     "key": "mykey",
   },
   "bzn-api": "crud",
-  "db-uuid": 12345,
+  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
   "request-id": 99
 }
 
@@ -469,7 +469,7 @@ Query if a key exists in the database.
 {
   "cmd": "keys",
   "bzn-api": "crud",
-  "db-uuid": 12345,
+  "db-uuid": 4982e0b0-0b2f-4c3a-b39f-26878e2ac814,
   "request-id": 45
 }
 
