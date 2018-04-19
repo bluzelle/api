@@ -306,7 +306,7 @@ Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object 
 - `data`: (Optional) Complementary data for the response.
 - `response_to`: (Optional) The `request_id` field of the initial request, if present.
 - `error`: (Optional) If present, this is an error string signifying that the request has failed.
-- `redirect`: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>'ws://127.0.0.1:8000'</code>.
+- `redirect`: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>'ws://127.0.0.1:8000'</code>. If present, the original JSON object is embeded in the <code>data</code> field.
 
 
 <aside class="notice">
