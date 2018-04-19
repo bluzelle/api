@@ -509,7 +509,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <li><code>data</code>: (Optional) Complementary data for the request. The presence/contents of this field depends on the command.</li>
 <li><code>bzn-api</code>: Used internally by the daemon. Set to constant <code>&quot;crud&quot;</code> for this guide.</li>
 <li><code>db-uuid</code>: The <code>UUID</code> for your database.</li>
-<li><code>request-id</code>: (Optional) An identifier for this request. The value is mirrored in the <code>response-to</code> field of the request.</li>
+<li><code>request_id</code>: (Optional) An identifier for this request. The value is mirrored in the <code>response_to</code> field of the request.</li>
 </ul>
 
 <hr>
@@ -518,7 +518,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 
 <ul>
 <li><code>data</code>: (Optional) Complementary data for the response.</li>
-<li><code>response-to</code>: (Optional) The <code>request-id</code> field of the initial request, if present.</li>
+<li><code>response_to</code>: (Optional) The <code>request_id</code> field of the initial request, if present.</li>
 <li><code>error</code>: (Optional) If present, this is an error string signifying that the request has failed.</li>
 <li><code>redirect</code>: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>&#39;ws://127.0.0.1:8000&#39;</code>.</li>
 </ul>
@@ -536,7 +536,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
@@ -546,14 +546,14 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He932NLA"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span><span class="c1">// or</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -569,21 +569,21 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
 </span><span class="c1">// Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span><span class="c1">// or</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid value"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -598,21 +598,21 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
 </span><span class="c1">// Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span><span class="c1">// or</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -627,7 +627,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
+  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
@@ -637,7 +637,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c1">// false</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -650,7 +650,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keys"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
@@ -660,7 +660,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"key1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">,</span><span class="w"> </span><span class="c1">...</span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -670,14 +670,14 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
 </span><span class="c1">// Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Used to verify a connection.</p>
