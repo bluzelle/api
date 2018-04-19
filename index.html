@@ -240,7 +240,7 @@
                     <a href="#update-key-value" class="toc-h2 toc-link" data-title="update-key-value">update(key, value)</a>
                   </li>
                   <li>
-                    <a href="#delete-key" class="toc-h2 toc-link" data-title="delete-key">delete(key)</a>
+                    <a href="#remove-key" class="toc-h2 toc-link" data-title="remove-key">remove(key)</a>
                   </li>
                   <li>
                     <a href="#ping" class="toc-h2 toc-link" data-title="ping">ping()</a>
@@ -280,7 +280,7 @@
 <p>This documentation covers our <strong>JavaScript</strong> and <strong>WebSocket</strong> tools.</p>
 </blockquote>
 
-<p><em>Bluzelle</em> is a decentralized database that makes it more efficient for blockchain products to manage their data while shifting control to the masses.</p>
+<p>Bluzelle combines the sharing economy with the token economy - renting individuals&#39; computer storage space to earn tokens while dApp developers use tokens to have their dApp&#39;s data stored and managed.</p>
 <h1 id='getting-bluzelle'>Getting Bluzelle</h1>
 <blockquote>
 <p>Our client JavaScript library is indexed and can be installed through <code>npm</code>.</p>
@@ -451,11 +451,11 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <p>Nothing.</p>
 <h3 id='fail-conditions-5'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or invalid value.</p>
-<h2 id='delete-key'>delete(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
-<span class="nx">bluzelle</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+<h2 id='remove-key'>remove(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
 
 <span class="c1">// async/await syntax</span>
-<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
 </code></pre>
 <p>Deletes a field from the database.</p>
 
@@ -520,7 +520,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <li><code>data</code>: (Optional) Complementary data for the response.</li>
 <li><code>response-to</code>: (Optional) The <code>request-id</code> field of the initial request, if present.</li>
 <li><code>error</code>: (Optional) If present, this is an error string signifying that the request has failed.</li>
-<li><code>redirect</code>: (Optional) If present, this instructs the client to open a new socket and send the request at the given port and address.</li>
+<li><code>redirect</code>: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>&#39;ws://127.0.0.1:8000&#39;</code>.</li>
 </ul>
 
 <aside class="notice">
