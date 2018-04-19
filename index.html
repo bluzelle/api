@@ -520,7 +520,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <li><code>data</code>: (Optional) Complementary data for the response.</li>
 <li><code>response_to</code>: (Optional) The <code>request_id</code> field of the initial request, if present.</li>
 <li><code>error</code>: (Optional) If present, this is an error string signifying that the request has failed.</li>
-<li><code>redirect</code>: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>&#39;ws://127.0.0.1:8000&#39;</code>.</li>
+<li><code>redirect</code>: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>&#39;ws://127.0.0.1:8000&#39;</code>. If present, the original JSON object is embeded in the <code>data</code> field.</li>
 </ul>
 
 <aside class="notice">
