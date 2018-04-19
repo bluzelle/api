@@ -297,14 +297,14 @@ Each WebSocket **request** is a JSON object and may have the following fields:
 - `data`: (Optional) Complementary data for the request. The presence/contents of this field depends on the command.
 - `bzn-api`: Used internally by the daemon. Set to constant `"crud"` for this guide.
 - `db-uuid`: The `UUID` for your database.
-- `request-id`: (Optional) An identifier for this request. The value is mirrored in the `response-to` field of the request.
+- `request_id`: (Optional) An identifier for this request. The value is mirrored in the `response_to` field of the request.
 
 -------
 
 Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object and may have the following fields:
 
 - `data`: (Optional) Complementary data for the response.
-- `response-to`: (Optional) The `request-id` field of the initial request, if present.
+- `response_to`: (Optional) The `request_id` field of the initial request, if present.
 - `error`: (Optional) If present, this is an error string signifying that the request has failed.
 - `redirect`: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>'ws://127.0.0.1:8000'</code>.
 
@@ -327,7 +327,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 13
+  "request_id": 13
 }
 
 
@@ -337,14 +337,14 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   "data": {
     "value": "He932NLA"
   },
-  "response-to": 13
+  "response_to": 13
 }
 
 // or
 
 {
   "error": "Key not in database",
-  "response-to": 13
+  "response_to": 13
 }
 
 ```
@@ -367,21 +367,21 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 45
+  "request_id": 45
 }
 
 
 // Response
 
 {
-  "response-to": 45
+  "response_to": 45
 }
 
 // or
 
 {
   "error": "Invalid value",
-  "response-to": 45
+  "response_to": 45
 }
 
 ```
@@ -403,21 +403,21 @@ Updates data to a given key.
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 45
+  "request_id": 45
 }
 
 
 // Response
 
 {
-  "response-to": 45
+  "response_to": 45
 }
 
 // or
 
 {
   "error": "Key not in database",
-  "response-to": 45
+  "response_to": 45
 }
 
 ```
@@ -440,7 +440,7 @@ Deletes a given key.
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 99
+  "request_id": 99
 }
 
 
@@ -450,7 +450,7 @@ Deletes a given key.
   "data": {
     "value": true // false
   },
-  "response-to": 99
+  "response_to": 99
 }
 
 ```
@@ -470,7 +470,7 @@ Query if a key exists in the database.
   "cmd": "keys",
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 45
+  "request_id": 45
 }
 
 
@@ -480,7 +480,7 @@ Query if a key exists in the database.
   "data": {
     "value": ["key1", "key2", "hello", "world", ...]
   },
-  "response-to": 45
+  "response_to": 45
 }
 
 ```
@@ -496,14 +496,14 @@ Obtain a list of keys in the database.
 {
   "cmd": "ping",
   "bzn-api": "ping",
-  "request-id": 5
+  "request_id": 5
 }
 
 
 // Response
 
 {
-  "response-to": 5
+  "response_to": 5
 }
 ```
 
