@@ -223,15 +223,15 @@ Fails when a response is not received from the connection or invalid value.
 
 
 
-## delete(key)
+## remove(key)
 
 
 ```javascript
 // promise syntax
-bluzelle.delete('mykey').then(() => { ... }, error => { ... });
+bluzelle.remove('mykey').then(() => { ... }, error => { ... });
 
 // async/await syntax
-await bluzelle.delete('mykey');
+await bluzelle.remove('mykey');
 ```
 
 
@@ -306,7 +306,7 @@ Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object 
 - `data`: (Optional) Complementary data for the response.
 - `response-to`: (Optional) The `request-id` field of the initial request, if present.
 - `error`: (Optional) If present, this is an error string signifying that the request has failed.
-- `redirect`: (Optional) If present, this instructs the client to open a new socket and send the request at the given port and address.
+- `redirect`: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>'ws://127.0.0.1:8000'</code>.
 
 
 <aside class="notice">
