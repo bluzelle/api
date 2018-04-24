@@ -13,8 +13,6 @@ search: true
 
 # Introduction
 
-> This documentation covers our **JavaScript** and **WebSocket** tools.
-
 Bluzelle combines the sharing economy with the token economy - renting individuals' computer storage space to earn tokens while dApp developers use tokens to have their dApp's data stored and managed.
 
 
@@ -32,9 +30,16 @@ npm install bluzelle
 const bluzelle = require('bluzelle');
 ```
 
-Our Lovelace release will provide developer tools for **JavaScript**, **NEO**, and **Soliditity**, as well as a generic **WebSocket** interface for communicating with the swarm.
+Our Lovelace release will provide developer tools for *JavaScript*, *NEO*, and *Soliditity*, as well as a generic *WebSocket* interface for communicating with the swarm.
 
-Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
+This documentation covers our **JavaScript** and **WebSocket** tools only. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
+
+
+## CRUD Application
+
+Click [here](CRUDWeb) to access our online *Bluzelle* CRUD application, developed using the JavaScript library.
+
+
 
 
 # JS API
@@ -508,11 +513,3 @@ Obtain a list of keys in the database.
 ```
 
 Used to verify a connection.
-
-
-
-# CRUD Application
-
-## Web
-
-Use the *Bluzelle* CRUD application right in your browser! Click [here](CRUDWeb).
