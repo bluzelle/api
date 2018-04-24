@@ -22,6 +22,7 @@ Options:
 
 run_build() {
   bundle exec middleman build --clean
+  cp -R CRUDWeb build
 }
 
 parse_args() {

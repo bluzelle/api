@@ -513,10 +513,6 @@ Used to verify a connection.
 
 # CRUD Application
 
-## Desktop
-
-Download desktop binaries for MacOS/Linux/Windows [here](CRUDDesktop).
-
 ## Web
 
 Use the *Bluzelle* CRUD application right in your browser! Click [here](CRUDWeb).
