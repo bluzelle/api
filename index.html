@@ -220,6 +220,11 @@
           </li>
           <li>
             <a href="#getting-bluzelle" class="toc-h1 toc-link" data-title="getting-bluzelle">Getting Bluzelle</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#crud-application" class="toc-h2 toc-link" data-title="crud-application">CRUD Application</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#js-api" class="toc-h1 toc-link" data-title="js-api">JS API</a>
@@ -270,24 +275,12 @@
                   </li>
               </ul>
           </li>
-          <li>
-            <a href="#crud-application" class="toc-h1 toc-link" data-title="crud-application">CRUD Application</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#web" class="toc-h2 toc-link" data-title="web">Web</a>
-                  </li>
-              </ul>
-          </li>
       </div>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<blockquote>
-<p>This documentation covers our <strong>JavaScript</strong> and <strong>WebSocket</strong> tools.</p>
-</blockquote>
-
 <p>Bluzelle combines the sharing economy with the token economy - renting individuals&#39; computer storage space to earn tokens while dApp developers use tokens to have their dApp&#39;s data stored and managed.</p>
 <h1 id='getting-bluzelle'>Getting Bluzelle</h1>
 <blockquote>
@@ -300,9 +293,11 @@
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
 </code></pre>
-<p>Our Lovelace release will provide developer tools for <strong>JavaScript</strong>, <strong>NEO</strong>, and <strong>Soliditity</strong>, as well as a generic <strong>WebSocket</strong> interface for communicating with the swarm.</p>
+<p>Our Lovelace release will provide developer tools for <em>JavaScript</em>, <em>NEO</em>, and <em>Soliditity</em>, as well as a generic <em>WebSocket</em> interface for communicating with the swarm.</p>
 
-<p>Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
+<p>This documentation covers our <strong>JavaScript</strong> and <strong>WebSocket</strong> tools only. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
+<h2 id='crud-application'>CRUD Application</h2>
+<p>Click <a href="CRUDWeb">here</a> to access our online <em>Bluzelle</em> CRUD application, developed using the JavaScript library.</p>
 <h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2>
 <blockquote>
 <p>Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.</p>
@@ -689,8 +684,6 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Used to verify a connection.</p>
-<h1 id='crud-application'>CRUD Application</h1><h2 id='web'>Web</h2>
-<p>Use the <em>Bluzelle</em> CRUD application right in your browser! Click <a href="CRUDWeb">here</a>.</p>
 
       </div>
       <div class="dark-box">
