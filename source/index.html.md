@@ -154,6 +154,40 @@ An array of strings representing keys in the database. ex. `["Key1", "Key2", ...
 Fails when a response is not received from the connection.
 
 
+## create(key)
+
+
+```javascript
+// promise syntax
+bluzelle.create('mykey', { a: 13 }).then(() => { ... }, error => { ... });
+
+// async/await syntax
+await bluzelle.create('mykey', { a: 13 });
+```
+
+
+Creates a field. *Bluzelle* supports JavaScript types that are `JSON`-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.
+
+
+----------
+
+Argument  | Description
+----------|------------
+key       | The name of the key
+value     | The value to set the key
+
+
+### Returns
+
+Nothing.
+
+
+### Fail Conditions
+
+Fails when a response is not received from the connection or invalid value.
+
+
+
 ## read(key)
 
 ```javascript
@@ -207,7 +241,7 @@ await bluzelle.update('mykey', arr.buffer);
 ```
 
 
-Update a field in the database. This is also used to create a new field. *Bluzelle* supports JavaScript types that are `JSON`-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.
+Update a field in the database.
 
 ----------
 
@@ -299,23 +333,22 @@ The *Bluzelle* architecture consists of a request-response system through WebSoc
 Each WebSocket **request** is a JSON object and may have the following fields:
 
 - `cmd`: The identifier of the request. (ex. `"read"`, `"update"`, ...)
-- `data`: (Optional) Complementary data for the request. The presence/contents of this field depends on the command.
+- `data`: Complementary data for the request. 
 - `bzn-api`: Used internally by the daemon. Set to constant `"crud"` for this guide.
 - `db-uuid`: The `UUID` for your database.
-- `request_id`: (Optional) An identifier for this request. The value is mirrored in the `response_to` field of the request.
+- `request-id`: (Optional) An identifier for this request. The value is mirrored in the `response-to` field of the request.
 
 -------
 
 Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object and may have the following fields:
 
-- `data`: (Optional) Complementary data for the response.
-- `response_to`: (Optional) The `request_id` field of the initial request, if present.
-- `error`: (Optional) If present, this is an error string signifying that the request has failed.
-- `redirect`: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>'ws://127.0.0.1:8000'</code>. If present, the original JSON object is embeded in the <code>data</code> field.
+- `data`: Complementary data for the response.
+- `response-to`: The `request-id` field of the initial request, if present.
+- `error`: If present, this is an error string signifying that the request has failed.
 
 
 <aside class="notice">
-The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</code> strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
+The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
 </aside>
 
 
@@ -332,7 +365,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request_id": 13
+  "request-id": 13
 }
 
 
@@ -342,14 +375,14 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   "data": {
     "value": "He932NLA"
   },
-  "response_to": 13
+  "response-to": 13
 }
 
 // or
 
 {
   "error": "Key not in database",
-  "response_to": 13
+  "response-to": 13
 }
 
 ```
@@ -372,21 +405,21 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request_id": 45
+  "request-id": 45
 }
 
 
 // Response
 
 {
-  "response_to": 45
+  "response-to": 45
 }
 
 // or
 
 {
   "error": "Invalid value",
-  "response_to": 45
+  "response-to": 45
 }
 
 ```
@@ -408,21 +441,21 @@ Updates data to a given key.
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request_id": 45
+  "request-id": 45
 }
 
 
 // Response
 
 {
-  "response_to": 45
+  "response-to": 45
 }
 
 // or
 
 {
   "error": "Key not in database",
-  "response_to": 45
+  "response-to": 45
 }
 
 ```
@@ -445,7 +478,7 @@ Deletes a given key.
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request_id": 99
+  "request-id": 99
 }
 
 
@@ -455,7 +488,7 @@ Deletes a given key.
   "data": {
     "value": true // false
   },
-  "response_to": 99
+  "response-to": 99
 }
 
 ```
@@ -474,7 +507,7 @@ Query if a key exists in the database.
   "cmd": "keys",
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request_id": 45
+  "request-id": 45
 }
 
 
@@ -484,7 +517,7 @@ Query if a key exists in the database.
   "data": {
     "value": ["key1", "key2", "hello", "world", ...]
   },
-  "response_to": 45
+  "response-to": 45
 }
 
 ```
@@ -500,15 +533,34 @@ Obtain a list of keys in the database.
 {
   "cmd": "ping",
   "bzn-api": "ping",
-  "request_id": 5
+  "request-id": 5
 }
 
 
 // Response
 
 {
-  "response_to": 5
+  "response-to": 5
 }
 ```
 
 Used to verify a connection.
+
+
+
+### Redirection
+
+```json
+{
+    "data" : {
+        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
+         "leader-url":"1227.0.0.1",
+         "leader-port": 49153
+    },
+    "error" : "NOT_THE_LEADER",
+    "request-id" : 0
+}
+```
+
+
+Some requests require you to be talking to the swarm leader. In this case, you will get a response of the this nature, and should reconnect at the address and port given.
