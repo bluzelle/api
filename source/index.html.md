@@ -72,7 +72,7 @@ await bluzelle.connect('ws://1.1.1.1:8000', UUID);
 
 Argument  | Description
 ----------|------------
-ws       | The WebSocket entry point to connect to
+ws       | The WebSocket entry point to connect to.
 uuid     | The universally unique identifier (UUID), <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 is recommended</a>
 
 
