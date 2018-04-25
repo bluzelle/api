@@ -239,6 +239,9 @@
                     <a href="#keys" class="toc-h2 toc-link" data-title="keys">keys()</a>
                   </li>
                   <li>
+                    <a href="#create-key" class="toc-h2 toc-link" data-title="create-key">create(key)</a>
+                  </li>
+                  <li>
                     <a href="#read-key" class="toc-h2 toc-link" data-title="read-key">read(key)</a>
                   </li>
                   <li>
@@ -390,6 +393,35 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <p>An array of strings representing keys in the database. ex. <code>[&quot;Key1&quot;, &quot;Key2&quot;, ...]</code></p>
 <h3 id='fail-conditions-3'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection.</p>
+<h2 id='create-key'>create(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">});</span>
+</code></pre>
+<p>Creates a field. <em>Bluzelle</em> supports JavaScript types that are <code>JSON</code>-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key</td>
+</tr>
+<tr>
+<td>value</td>
+<td>The value to set the key</td>
+</tr>
+</tbody></table>
+<h3 id='returns-4'>Returns</h3>
+<p>Nothing.</p>
+<h3 id='fail-conditions-4'>Fail Conditions</h3>
+<p>Fails when a response is not received from the connection or invalid value.</p>
 <h2 id='read-key'>read(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
 
@@ -411,9 +443,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <td>The key to retrieve.</td>
 </tr>
 </tbody></table>
-<h3 id='returns-4'>Returns</h3>
+<h3 id='returns-5'>Returns</h3>
 <p>The value of the key. This is anything that is valid in the <em>Bluzelle</em> database. (See <a href="#update-key-value"><code>update(key, value)</code></a>)</p>
-<h3 id='fail-conditions-4'>Fail Conditions</h3>
+<h3 id='fail-conditions-5'>Fail Conditions</h3>
 <p>Fails when a response is not recieved or the key does not exist in the database.</p>
 <h2 id='update-key-value'>update(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -431,7 +463,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 
 <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">buffer</span><span class="p">);</span>
 </code></pre>
-<p>Update a field in the database. This is also used to create a new field. <em>Bluzelle</em> supports JavaScript types that are <code>JSON</code>-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.</p>
+<p>Update a field in the database.</p>
 
 <hr>
 
@@ -450,9 +482,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <td>The value to set the key</td>
 </tr>
 </tbody></table>
-<h3 id='returns-5'>Returns</h3>
+<h3 id='returns-6'>Returns</h3>
 <p>Nothing.</p>
-<h3 id='fail-conditions-5'>Fail Conditions</h3>
+<h3 id='fail-conditions-6'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or invalid value.</p>
 <h2 id='remove-key'>remove(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -475,9 +507,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <td>The name of the key to delete.</td>
 </tr>
 </tbody></table>
-<h3 id='returns-6'>Returns</h3>
+<h3 id='returns-7'>Returns</h3>
 <p>Nothing.</p>
-<h3 id='fail-conditions-6'>Fail Conditions</h3>
+<h3 id='fail-conditions-7'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or key not in database.</p>
 <h2 id='ping'>ping()</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">ping</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -496,9 +528,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 </tr>
 </thead><tbody>
 </tbody></table>
-<h3 id='returns-7'>Returns</h3>
+<h3 id='returns-8'>Returns</h3>
 <p>Nothing.</p>
-<h3 id='fail-conditions-7'>Fail Conditions</h3>
+<h3 id='fail-conditions-8'>Fail Conditions</h3>
 <p>Fails when no response is received.</p>
 <h1 id='websocket-api'>WebSocket API</h1>
 <p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
@@ -509,10 +541,10 @@ This function is an abstraction over establishing a WebSocket connection, and th
 
 <ul>
 <li><code>cmd</code>: The identifier of the request. (ex. <code>&quot;read&quot;</code>, <code>&quot;update&quot;</code>, ...)</li>
-<li><code>data</code>: (Optional) Complementary data for the request. The presence/contents of this field depends on the command.</li>
+<li><code>data</code>: Complementary data for the request. </li>
 <li><code>bzn-api</code>: Used internally by the daemon. Set to constant <code>&quot;crud&quot;</code> for this guide.</li>
 <li><code>db-uuid</code>: The <code>UUID</code> for your database.</li>
-<li><code>request_id</code>: (Optional) An identifier for this request. The value is mirrored in the <code>response_to</code> field of the request.</li>
+<li><code>request-id</code>: (Optional) An identifier for this request. The value is mirrored in the <code>response-to</code> field of the request.</li>
 </ul>
 
 <hr>
@@ -520,14 +552,13 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <p>Likewise, each WebSocket <strong>response</strong> from a <em>Bluzelle</em> daemon is a JSON object and may have the following fields:</p>
 
 <ul>
-<li><code>data</code>: (Optional) Complementary data for the response.</li>
-<li><code>response_to</code>: (Optional) The <code>request_id</code> field of the initial request, if present.</li>
-<li><code>error</code>: (Optional) If present, this is an error string signifying that the request has failed.</li>
-<li><code>redirect</code>: (Optional) If present, this instructs the client to resend the request to the port and address provided. This is a string of the form <code>&#39;ws://127.0.0.1:8000&#39;</code>. If present, the original JSON object is embeded in the <code>data</code> field.</li>
+<li><code>data</code>: Complementary data for the response.</li>
+<li><code>response-to</code>: The <code>request-id</code> field of the initial request, if present.</li>
+<li><code>error</code>: If present, this is an error string signifying that the request has failed.</li>
 </ul>
 
 <aside class="notice">
-The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</code> strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
+The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
 </aside>
 <h2 id='read'>read</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
 </span><span class="c1">// Request</span><span class="w">
@@ -539,7 +570,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
@@ -549,14 +580,14 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He932NLA"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span><span class="c1">// or</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -572,21 +603,21 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
 </span><span class="c1">// Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span><span class="c1">// or</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid value"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -601,21 +632,21 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
 </span><span class="c1">// Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span><span class="c1">// or</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -630,7 +661,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
@@ -640,7 +671,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c1">// false</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -653,7 +684,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keys"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
@@ -663,7 +694,7 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"key1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">,</span><span class="w"> </span><span class="c1">...</span><span class="p">]</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -673,17 +704,28 @@ The <em>Bluzelle</em> database reads and writes values encoded in <code>base64</
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 
 </span><span class="c1">// Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"response_to"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+  </span><span class="s2">"response-to"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Used to verify a connection.</p>
+<h3 id='redirection'>Redirection</h3><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"leader-url"</span><span class="p">:</span><span class="s2">"1227.0.0.1"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Some requests require you to be talking to the swarm leader. In this case, you will get a response of the this nature, and should reconnect at the address and port given.</p>
 
       </div>
       <div class="dark-box">
