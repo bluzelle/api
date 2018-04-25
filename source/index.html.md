@@ -18,7 +18,7 @@ Bluzelle combines the sharing economy with the token economy - renting individua
 
 # Getting Bluzelle
 
-> Our client JavaScript library is indexed and can be installed through `npm`.
+> Our client JavaScript library can be installed through `npm`.
 
 ```shell
 npm install bluzelle
@@ -246,7 +246,7 @@ Deletes a field from the database.
 
 Argument  | Description
 ----------|------------
-key       | The name of the key to delete
+key       | The name of the key to delete.
 
 
 ### Returns
@@ -276,7 +276,7 @@ Pings the current connection.
 ----------
 
 Argument  | Description
-----------|------------
+----------|-----------
 
 
 ### Returns
@@ -461,7 +461,6 @@ Deletes a given key.
 ```
 
 Query if a key exists in the database.
-
 
 
 ## keys
