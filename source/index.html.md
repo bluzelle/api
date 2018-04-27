@@ -292,37 +292,6 @@ Nothing.
 Fails when a response is not received from the connection or key not in database.
 
 
-## ping()
-
-
-```javascript
-// promise syntax
-bluzelle.ping().then(() => { ... }, error => { ... });
-
-// async/await syntax
-await bluzelle.ping();
-```
-
-
-Pings the current connection.
-
-----------
-
-Argument  | Description
-----------|-----------
-
-
-### Returns
-
-Nothing.
-
-
-### Fail Conditions
-
-Fails when no response is received.
-
-
-
 # WebSocket API
 
 The *Bluzelle* architecture consists of a request-response system through WebSockets.
@@ -522,29 +491,6 @@ Query if a key exists in the database.
 ```
 
 Obtain a list of keys in the database.
-
-
-## ping
-
-```json-doc
-// Request
-
-{
-  "cmd": "ping",
-  "bzn-api": "ping",
-  "request-id": 5
-}
-
-
-// Response
-
-{
-  "request-id": 5
-}
-```
-
-Used to verify a connection.
-
 
 
 ## redirection
