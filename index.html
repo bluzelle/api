@@ -250,9 +250,6 @@
                   <li>
                     <a href="#remove-key" class="toc-h2 toc-link" data-title="remove-key">remove(key)</a>
                   </li>
-                  <li>
-                    <a href="#ping" class="toc-h2 toc-link" data-title="ping">ping()</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -272,9 +269,6 @@
                   </li>
                   <li>
                     <a href="#keys-2" class="toc-h2 toc-link" data-title="keys">keys</a>
-                  </li>
-                  <li>
-                    <a href="#ping-2" class="toc-h2 toc-link" data-title="ping">ping</a>
                   </li>
                   <li>
                     <a href="#redirection" class="toc-h2 toc-link" data-title="redirection">redirection</a>
@@ -514,27 +508,6 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <p>Nothing.</p>
 <h3 id='fail-conditions-7'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or key not in database.</p>
-<h2 id='ping'>ping()</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
-<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">ping</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
-
-<span class="c1">// async/await syntax</span>
-<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">ping</span><span class="p">();</span>
-</code></pre>
-<p>Pings the current connection.</p>
-
-<hr>
-
-<table><thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-</tbody></table>
-<h3 id='returns-8'>Returns</h3>
-<p>Nothing.</p>
-<h3 id='fail-conditions-8'>Fail Conditions</h3>
-<p>Fails when no response is received.</p>
 <h1 id='websocket-api'>WebSocket API</h1>
 <p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
 
@@ -702,22 +675,6 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 
 </span></code></pre>
 <p>Obtain a list of keys in the database.</p>
-<h2 id='ping-2'>ping</h2><pre class="highlight json-doc tab-json-doc"><code><span class="c1">// Request</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ping"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-
-</span><span class="c1">// Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Used to verify a connection.</p>
 <h2 id='redirection'>redirection</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
