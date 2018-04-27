@@ -18,7 +18,7 @@ Bluzelle combines the sharing economy with the token economy - renting individua
 
 # Getting Bluzelle
 
-> Our client JavaScript library can be installed through `npm`.
+> Our client JavaScript library can be installed through `npm`
 
 ```shell
 npm install bluzelle
