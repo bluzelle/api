@@ -37,7 +37,7 @@ This documentation covers our **JavaScript** and **WebSocket** tools only. Each 
 
 ## CRUD Application
 
-Click [here](CRUDWeb) to access our online *Bluzelle* CRUD application, developed using the JavaScript library.
+Click [here](http://13.78.135.208/) to access our online *Bluzelle* CRUD application, developed using the JavaScript library.
 
 
 
