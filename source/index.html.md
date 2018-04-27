@@ -18,7 +18,7 @@ Bluzelle combines the sharing economy with the token economy - renting individua
 
 # Getting Bluzelle
 
-> Our client JavaScript library can be installed through `npm`
+> Our client JavaScript library can be installed through `npm`.
 
 ```shell
 npm install bluzelle
@@ -45,27 +45,21 @@ Click [here](CRUDWeb) to access our online *Bluzelle* CRUD application, develope
 # JS API
 
 
-
 ## connect(ws, uuid)
-
-> Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.
-
-> You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of `then`.
 
 
 ```javascript
 
 // promise syntax
-bluzelle.connect('ws://1.1.1.1:8000', UUID)
-  .then(() => console.log('Connection established!'),
-        () => console.log('Connection refused!'));
+bluzelle.connect('ws://1.1.1.1:8000', UUID);
 
 // async/await syntax
-await bluzelle.connect('ws://1.1.1.1:8000', UUID);
+bluzelle.connect('ws://1.1.1.1:8000', UUID);
 ```
 
+Configures the address, port, and UUID of the connection. This may be called multiple times to update the connection.
 
-*Bluzelle* uses `UUID`'s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>. To connect, pass in the WebSocket address of the entry point and our system will automatically communicate and connect with the distributed swarm.
+*Bluzelle* uses `UUID`'s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.
 
 
 ---------
@@ -95,6 +89,11 @@ This function is an abstraction over establishing a WebSocket connection, and th
 
 
 ## has(key)
+
+> Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.
+
+> You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of `then`.
+
 
 ```javascript
 // promise syntax
@@ -336,14 +335,14 @@ Each WebSocket **request** is a JSON object and may have the following fields:
 - `data`: Complementary data for the request. 
 - `bzn-api`: Used internally by the daemon. Set to constant `"crud"` for this guide.
 - `db-uuid`: The `UUID` for your database.
-- `request-id`: (Optional) An identifier for this request. The value is mirrored in the `response-to` field of the request.
+- `request-id`: (Optional) An identifier for this request..
 
 -------
 
 Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object and may have the following fields:
 
 - `data`: Complementary data for the response.
-- `response-to`: The `request-id` field of the initial request, if present.
+- `response-id`: The `request-id` field of the initial request, if present.
 - `error`: If present, this is an error string signifying that the request has failed.
 
 
@@ -375,14 +374,14 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
   "data": {
     "value": "He932NLA"
   },
-  "response-to": 13
+  "request-id": 13
 }
 
 // or
 
 {
   "error": "Key not in database",
-  "response-to": 13
+  "request-id": 13
 }
 
 ```
@@ -412,14 +411,14 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
 // Response
 
 {
-  "response-to": 45
+  "request-id": 45
 }
 
 // or
 
 {
   "error": "Invalid value",
-  "response-to": 45
+  "request-id": 45
 }
 
 ```
@@ -448,14 +447,14 @@ Updates data to a given key.
 // Response
 
 {
-  "response-to": 45
+  "request-id": 45
 }
 
 // or
 
 {
   "error": "Key not in database",
-  "response-to": 45
+  "request-id": 45
 }
 
 ```
@@ -486,9 +485,9 @@ Deletes a given key.
 
 {
   "data": {
-    "value": true // false
+    "has-key": true // false
   },
-  "response-to": 99
+  "request-id": 99
 }
 
 ```
@@ -515,9 +514,9 @@ Query if a key exists in the database.
 
 {
   "data": {
-    "value": ["key1", "key2", "hello", "world", ...]
+    "keys": ["key1", "key2", "hello", "world", ...]
   },
-  "response-to": 45
+  "request-id": 45
 }
 
 ```
@@ -540,7 +539,7 @@ Obtain a list of keys in the database.
 // Response
 
 {
-  "response-to": 5
+  "request-id": 5
 }
 ```
 
@@ -548,14 +547,14 @@ Used to verify a connection.
 
 
 
-### Redirection
+## redirection
 
 ```json
 {
     "data" : {
         "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
-         "leader-url":"1227.0.0.1",
-         "leader-port": 49153
+        "leader-host":"1227.0.0.1",
+        "leader-port": 49153
     },
     "error" : "NOT_THE_LEADER",
     "request-id" : 0
