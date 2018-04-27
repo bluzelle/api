@@ -78,7 +78,7 @@ uuid     | The universally unique identifier (UUID), <a href="https://en.wikiped
 
 ### Returns
 
-Nothing.
+Nothing
 
 
 ### Fail Conditions
