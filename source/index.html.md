@@ -311,12 +311,16 @@ Each WebSocket **request** is a JSON object and may have the following fields:
 Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object and may have the following fields:
 
 - `data`: Complementary data for the response.
-- `response-id`: The `request-id` field of the initial request, if present.
+- `request-id`: The `request-id` field of the initial request, if present.
 - `error`: If present, this is an error string signifying that the request has failed.
 
 
 <aside class="notice">
 The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
+</aside>
+
+<aside class="notice">
+Commands that modify the database may receive a redirection response, which means you should re-establish your connection at the given host and address, and resend the command.
 </aside>
 
 
