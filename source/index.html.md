@@ -87,73 +87,7 @@ You must replace <code>UUID</code> with your personal UUID.
 This function is an abstraction over establishing a WebSocket connection, and thus does not wrap a particular command in the WebSocket API.
 </aside>
 
-
-## has(key)
-
-> Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.
-
-> You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of `then`.
-
-
-```javascript
-// promise syntax
-bluzelle.has('mykey').then(hasMyKey => { ... }, error => { ... });
-
-// async/await syntax
-const hasMyKey = await bluzelle.has('mykey');
-```
-
-
-Query to see if a key is in the database.
-
-----------
-
-Argument  | Description
-----------|------------
-key       | The name of the key to query
-
-
-### Returns
-
-A boolean value, `true` of `false`, representing whether or not the key is in the database.
-
-
-### Fail Conditions
-
-Fails when a response is not received from the connection.
-
-
-
-## keys()
-
-```javascript
-// promise syntax
-bluzelle.keys().then(keys => { ... }, error => { ... });
-
-// async/await syntax
-const keys = await bluzelle.keys();
-```
-
-
-Retrieve a list of all keys.
-
-----------
-
-Argument  | Description
-----------|------------
-
-
-### Returns
-
-An array of strings representing keys in the database. ex. `["Key1", "Key2", ...]`
-
-
-### Fail Conditions
-
-Fails when a response is not received from the connection.
-
-
-## create(key)
+## create(key, value)
 
 
 ```javascript
@@ -292,6 +226,72 @@ Nothing.
 Fails when a response is not received from the connection or key not in database.
 
 
+## has(key)
+
+> Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.
+
+> You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of `then`.
+
+
+```javascript
+// promise syntax
+bluzelle.has('mykey').then(hasMyKey => { ... }, error => { ... });
+
+// async/await syntax
+const hasMyKey = await bluzelle.has('mykey');
+```
+
+
+Query to see if a key is in the database.
+
+----------
+
+Argument  | Description
+----------|------------
+key       | The name of the key to query
+
+
+### Returns
+
+A boolean value, `true` of `false`, representing whether or not the key is in the database.
+
+
+### Fail Conditions
+
+Fails when a response is not received from the connection.
+
+
+
+## keys()
+
+```javascript
+// promise syntax
+bluzelle.keys().then(keys => { ... }, error => { ... });
+
+// async/await syntax
+const keys = await bluzelle.keys();
+```
+
+
+Retrieve a list of all keys.
+
+----------
+
+Argument  | Description
+----------|------------
+
+
+### Returns
+
+An array of strings representing keys in the database. ex. `["Key1", "Key2", ...]`
+
+
+### Fail Conditions
+
+Fails when a response is not received from the connection.
+
+
+
 # WebSocket API
 
 The *Bluzelle* architecture consists of a request-response system through WebSockets.
@@ -319,9 +319,52 @@ Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object 
 The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
 </aside>
 
-<aside class="notice">
-Commands that modify the database may receive a redirection response, which means you should re-establish your connection at the given host and address, and resend the command.
-</aside>
+## create
+
+```json-doc
+
+// Request
+
+{
+  "bzn-api": "crud",
+  "cmd": "create",
+  "data": {
+      "key": "myKey",
+      "value": "I2luY2x1ZGUgPG1vY2tzL21vY2tfbm9kZV9iYXNlLmhwcD4NCiNpbmNsdWRlIDxtb2Nrcy9tb2NrX3Nlc3Npb25fYmFzZS5ocHA+DQojaW5jbHVkZSA8bW9ja3MvbW9ja19yYWZ0X2Jhc2UuaHBwPg0KI2luY2x1ZGUgPG1vY2tzL21vY2tfc3RvcmFnZV9iYXNlLmhwcD4NCg=="
+  },
+  "db-uuid": "80174b53-2dda-49f1-9d6a-6a780d4cceca",
+  "request-id": 33
+}
+
+
+// Successful Response
+
+{
+  "request-id": 33
+}
+
+// Failure Response
+
+{
+	"error" : "RECORD_EXISTS",
+	"request-id" : 33
+}
+
+// Redirection Response
+
+{
+    "data" : {
+        "leader-host":"127.0.0.1",
+        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
+        "leader-name" : "peer1",
+        "leader-port": 49153
+    },
+    "error" : "NOT_THE_LEADER",
+    "request-id" : 33
+}
+
+Creates a key value pair in the database. Data needs to be string encoded.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
 
 
 ## read
@@ -333,7 +376,7 @@ Commands that modify the database may receive a redirection response, which mean
 {
   "cmd": "read",
   "data": {
-    "key": "mykey"
+      "key": "mykey"
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
@@ -341,26 +384,42 @@ Commands that modify the database may receive a redirection response, which mean
 }
 
 
-// Response
+// Successful Response
 
 {
   "data": {
-    "value": "He932NLA"
+      "value": "He932NLA"
   },
   "request-id": 13
 }
 
-// or
+// Failure Response
 
 {
-  "error": "Key not in database",
+  "error": "RECORD_NOT_FOUND",
   "request-id": 13
 }
+
+// Redirection Response
+
+{
+    "data" : {
+        "leader-host":"127.0.0.1",
+        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
+        "leader-name" : "peer1",
+        "leader-port": 49153
+    },
+    "error" : "NOT_THE_LEADER",
+    "request-id" : 13
+}
+ 
 
 ```
 
 
 Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
+
 
 
 ## update
@@ -372,8 +431,8 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
 {
   "cmd": "update",
   "data": {
-    "key": "mykey",
-    "value": "GNJjA39s"
+      "key": "mykey",
+      "value": "GNJjA39s"
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
@@ -381,22 +440,37 @@ Reads data from a given key. Data is in the form of a <code>base64</code>-encode
 }
 
 
-// Response
+// Successful Response
 
 {
   "request-id": 45
 }
 
-// or
+// Failure Response
 
 {
-  "error": "Invalid value",
-  "request-id": 45
+	"error" : "RECORD_NOT_FOUND",
+	"request-id" : 45
+}
+
+// Redirection Response
+
+{
+    "data" : {
+        "leader-host":"127.0.0.1",
+        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
+        "leader-name" : "peer1",
+        "leader-port": 49153
+    },
+    "error" : "NOT_THE_LEADER",
+    "request-id" : 45
 }
 
 ```
 
 Updates data to a given key.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
+
 
 
 
@@ -409,7 +483,7 @@ Updates data to a given key.
 {
   "cmd": "delete",
   "data": {
-    "key": "mykey",
+      "key": "mykey",
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
@@ -417,22 +491,36 @@ Updates data to a given key.
 }
 
 
-// Response
+// Successful Response
 
 {
   "request-id": 45
 }
 
-// or
+// Failure Response
 
 {
-  "error": "Key not in database",
-  "request-id": 45
+	"error" : "RECORD_NOT_FOUND",
+	"request-id" : 45
+}
+
+// Redirection Response
+
+{
+    "data" : {
+        "leader-host":"127.0.0.1",
+        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
+        "leader-name" : "peer1",
+        "leader-port": 49153
+    },
+    "error" : "NOT_THE_LEADER",
+    "request-id" : 45
 }
 
 ```
 
 Deletes a given key.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
 
 
 
@@ -446,7 +534,7 @@ Deletes a given key.
 {
   "cmd": "has",
   "data": {
-    "key": "mykey",
+      "key": "mykey",
   },
   "bzn-api": "crud",
   "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
@@ -457,10 +545,10 @@ Deletes a given key.
 // Response
 
 {
-  "data": {
-    "has-key": true // false
-  },
-  "request-id": 99
+	"data" : {
+	    "key-exists" : true    // "key-exists" : false
+	},
+	"request-id" : 99
 }
 
 ```
@@ -487,7 +575,7 @@ Query if a key exists in the database.
 
 {
   "data": {
-    "keys": ["key1", "key2", "hello", "world", ...]
+      "keys": ["key1", "key2", "hello", "world", ...]   // "keys": null
   },
   "request-id": 45
 }
@@ -497,19 +585,30 @@ Query if a key exists in the database.
 Obtain a list of keys in the database.
 
 
-## redirection
+## size
 
-```json
+```json-doc
+
+
+// Request
+
 {
-    "data" : {
-        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
-        "leader-host":"1227.0.0.1",
-        "leader-port": 49153
-    },
-    "error" : "NOT_THE_LEADER",
-    "request-id" : 0
+  "bzn-api": "crud",
+  "cmd": "size",
+  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
+  "request-id": 47
 }
+
+
+// Response
+
+{
+	"data" : {
+	    "size" : 624    // "size" : 0
+	},
+	"request-id" : 47
+}
+
 ```
 
-
-Some requests require you to be talking to the swarm leader. In this case, you will get a response of the this nature, and should reconnect at the address and port given.
+Returns the size of your database in bytes.
