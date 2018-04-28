@@ -233,13 +233,7 @@
                     <a href="#connect-ws-uuid" class="toc-h2 toc-link" data-title="connect-ws-uuid">connect(ws, uuid)</a>
                   </li>
                   <li>
-                    <a href="#has-key" class="toc-h2 toc-link" data-title="has-key">has(key)</a>
-                  </li>
-                  <li>
-                    <a href="#keys" class="toc-h2 toc-link" data-title="keys">keys()</a>
-                  </li>
-                  <li>
-                    <a href="#create-key" class="toc-h2 toc-link" data-title="create-key">create(key)</a>
+                    <a href="#create-key-value" class="toc-h2 toc-link" data-title="create-key-value">create(key, value)</a>
                   </li>
                   <li>
                     <a href="#read-key" class="toc-h2 toc-link" data-title="read-key">read(key)</a>
@@ -249,6 +243,12 @@
                   </li>
                   <li>
                     <a href="#remove-key" class="toc-h2 toc-link" data-title="remove-key">remove(key)</a>
+                  </li>
+                  <li>
+                    <a href="#has-key" class="toc-h2 toc-link" data-title="has-key">has(key)</a>
+                  </li>
+                  <li>
+                    <a href="#keys" class="toc-h2 toc-link" data-title="keys">keys()</a>
                   </li>
               </ul>
           </li>
@@ -272,9 +272,6 @@
                   </li>
                   <li>
                     <a href="#keys-2" class="toc-h2 toc-link" data-title="keys">keys</a>
-                  </li>
-                  <li>
-                    <a href="#redirection" class="toc-h2 toc-link" data-title="redirection">redirection</a>
                   </li>
                   <li>
                     <a href="#size" class="toc-h2 toc-link" data-title="size">size</a>
@@ -344,59 +341,7 @@ You must replace <code>UUID</code> with your personal UUID.
 <aside class="notice">
 This function is an abstraction over establishing a WebSocket connection, and thus does not wrap a particular command in the WebSocket API.
 </aside>
-<h2 id='has-key'>has(key)</h2>
-<blockquote>
-<p>Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.</p>
-
-<p>You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of <code>then</code>.</p>
-</blockquote>
-<pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
-<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">hasMyKey</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
-
-<span class="c1">// async/await syntax</span>
-<span class="kr">const</span> <span class="nx">hasMyKey</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
-</code></pre>
-<p>Query to see if a key is in the database.</p>
-
-<hr>
-
-<table><thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>key</td>
-<td>The name of the key to query</td>
-</tr>
-</tbody></table>
-<h3 id='returns-2'>Returns</h3>
-<p>A boolean value, <code>true</code> of <code>false</code>, representing whether or not the key is in the database.</p>
-<h3 id='fail-conditions-2'>Fail Conditions</h3>
-<p>Fails when a response is not received from the connection.</p>
-<h2 id='keys'>keys()</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
-<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">keys</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">keys</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
-
-<span class="c1">// async/await syntax</span>
-<span class="kr">const</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span>
-</code></pre>
-<p>Retrieve a list of all keys.</p>
-
-<hr>
-
-<table><thead>
-<tr>
-<th>Argument</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-</tbody></table>
-<h3 id='returns-3'>Returns</h3>
-<p>An array of strings representing keys in the database. ex. <code>[&quot;Key1&quot;, &quot;Key2&quot;, ...]</code></p>
-<h3 id='fail-conditions-3'>Fail Conditions</h3>
-<p>Fails when a response is not received from the connection.</p>
-<h2 id='create-key'>create(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<h2 id='create-key-value'>create(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
 
 <span class="c1">// async/await syntax</span>
@@ -421,9 +366,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <td>The value to set the key</td>
 </tr>
 </tbody></table>
-<h3 id='returns-4'>Returns</h3>
+<h3 id='returns-2'>Returns</h3>
 <p>Nothing.</p>
-<h3 id='fail-conditions-4'>Fail Conditions</h3>
+<h3 id='fail-conditions-2'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or invalid value.</p>
 <h2 id='read-key'>read(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -446,9 +391,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <td>The key to retrieve.</td>
 </tr>
 </tbody></table>
-<h3 id='returns-5'>Returns</h3>
+<h3 id='returns-3'>Returns</h3>
 <p>The value of the key. This is anything that is valid in the <em>Bluzelle</em> database. (See <a href="#update-key-value"><code>update(key, value)</code></a>)</p>
-<h3 id='fail-conditions-5'>Fail Conditions</h3>
+<h3 id='fail-conditions-3'>Fail Conditions</h3>
 <p>Fails when a response is not recieved or the key does not exist in the database.</p>
 <h2 id='update-key-value'>update(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -485,9 +430,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <td>The value to set the key</td>
 </tr>
 </tbody></table>
-<h3 id='returns-6'>Returns</h3>
+<h3 id='returns-4'>Returns</h3>
 <p>Nothing.</p>
-<h3 id='fail-conditions-6'>Fail Conditions</h3>
+<h3 id='fail-conditions-4'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or invalid value.</p>
 <h2 id='remove-key'>remove(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -510,10 +455,62 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <td>The name of the key to delete.</td>
 </tr>
 </tbody></table>
-<h3 id='returns-7'>Returns</h3>
+<h3 id='returns-5'>Returns</h3>
 <p>Nothing.</p>
-<h3 id='fail-conditions-7'>Fail Conditions</h3>
+<h3 id='fail-conditions-5'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or key not in database.</p>
+<h2 id='has-key'>has(key)</h2>
+<blockquote>
+<p>Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.</p>
+
+<p>You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of <code>then</code>.</p>
+</blockquote>
+<pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">hasMyKey</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="kr">const</span> <span class="nx">hasMyKey</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
+</code></pre>
+<p>Query to see if a key is in the database.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key to query</td>
+</tr>
+</tbody></table>
+<h3 id='returns-6'>Returns</h3>
+<p>A boolean value, <code>true</code> of <code>false</code>, representing whether or not the key is in the database.</p>
+<h3 id='fail-conditions-6'>Fail Conditions</h3>
+<p>Fails when a response is not received from the connection.</p>
+<h2 id='keys'>keys()</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">keys</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">keys</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+
+<span class="c1">// async/await syntax</span>
+<span class="kr">const</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">keys</span><span class="p">();</span>
+</code></pre>
+<p>Retrieve a list of all keys.</p>
+
+<hr>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h3 id='returns-7'>Returns</h3>
+<p>An array of strings representing keys in the database. ex. <code>[&quot;Key1&quot;, &quot;Key2&quot;, ...]</code></p>
+<h3 id='fail-conditions-7'>Fail Conditions</h3>
+<p>Fails when a response is not received from the connection.</p>
 <h1 id='websocket-api'>WebSocket API</h1>
 <p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
 
@@ -543,14 +540,56 @@ This function is an abstraction over establishing a WebSocket connection, and th
 The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
 </aside>
 <h2 id='create'>create</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+</span><span class="c1">// Request</span><span class="w">
 
-</span></code></pre><h2 id='read'>read</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"create"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myKey"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I2luY2x1ZGUgPG1vY2tzL21vY2tfbm9kZV9iYXNlLmhwcD4NCiNpbmNsdWRlIDxtb2Nrcy9tb2NrX3Nlc3Npb25fYmFzZS5ocHA+DQojaW5jbHVkZSA8bW9ja3MvbW9ja19yYWZ0X2Jhc2UuaHBwPg0KI2luY2x1ZGUgPG1vY2tzL21vY2tfc3RvcmFnZV9iYXNlLmhwcD4NCg=="</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80174b53-2dda-49f1-9d6a-6a780d4cceca"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1">// Successful Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// Failure Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_EXISTS"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// Redirection Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p>Creates a key value pair in the database. Data needs to be string encoded.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
+<h2 id='read'>read</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
 </span><span class="c1">// Request</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
@@ -558,32 +597,47 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 </span><span class="p">}</span><span class="w">
 
 
-</span><span class="c1">// Response</span><span class="w">
+</span><span class="c1">// Successful Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He932NLA"</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He932NLA"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span><span class="c1">// or</span><span class="w">
+</span><span class="c1">// Failure Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_NOT_FOUND"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
+</span><span class="c1">// Redirection Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
 </span></code></pre>
-<p>Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.</p>
+<p>Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
 <h2 id='update'>update</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
 </span><span class="c1">// Request</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GNJjA39s"</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GNJjA39s"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
@@ -591,28 +645,42 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 </span><span class="p">}</span><span class="w">
 
 
-</span><span class="c1">// Response</span><span class="w">
+</span><span class="c1">// Successful Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span><span class="c1">// or</span><span class="w">
+</span><span class="c1">// Failure Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid value"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_NOT_FOUND"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// Redirection Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
-<p>Updates data to a given key.</p>
+<p>Updates data to a given key.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
 <h2 id='delete'>delete</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
 </span><span class="c1">// Request</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delete"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
@@ -620,28 +688,42 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 </span><span class="p">}</span><span class="w">
 
 
-</span><span class="c1">// Response</span><span class="w">
+</span><span class="c1">// Successful Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span><span class="c1">// or</span><span class="w">
+</span><span class="c1">// Failure Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Key not in database"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_NOT_FOUND"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// Redirection Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
-<p>Deletes a given key.</p>
+<p>Deletes a given key.
+Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
 <h2 id='has'>has</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
 </span><span class="c1">// Request</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"has"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
@@ -652,10 +734,10 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 </span><span class="c1">// Response</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"has-key"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="c1">// false</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
+    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"key-exists"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">    </span><span class="c1">// "key-exists" : false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
@@ -676,24 +758,13 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 
 </span><span class="p">{</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"key1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">,</span><span class="w"> </span><span class="c1">...</span><span class="p">]</span><span class="w">
+      </span><span class="s2">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"key1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">,</span><span class="w"> </span><span class="c1">...</span><span class="p">]</span><span class="w">   </span><span class="c1">// "keys": null</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
 <p>Obtain a list of keys in the database.</p>
-<h2 id='redirection'>redirection</h2><pre class="highlight json-doc tab-json-doc"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Some requests require you to be talking to the swarm leader. In this case, you will get a response of the this nature, and should reconnect at the address and port given.</p>
 <h2 id='size'>size</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
 
 </span><span class="c1">// Request</span><span class="w">
@@ -710,13 +781,13 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 
 </span><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"size"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">624</span><span class="w">
+        </span><span class="s2">"size"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">624</span><span class="w">    </span><span class="c1">// "size" : 0</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">47</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre>
-<p>Returns the current size of your database in bytes.</p>
+<p>Returns the size of your database in bytes.</p>
 
       </div>
       <div class="dark-box">
