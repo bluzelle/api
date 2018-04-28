@@ -256,6 +256,9 @@
             <a href="#websocket-api" class="toc-h1 toc-link" data-title="websocket-api">WebSocket API</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#create" class="toc-h2 toc-link" data-title="create">create</a>
+                  </li>
+                  <li>
                     <a href="#read" class="toc-h2 toc-link" data-title="read">read</a>
                   </li>
                   <li>
@@ -272,6 +275,9 @@
                   </li>
                   <li>
                     <a href="#redirection" class="toc-h2 toc-link" data-title="redirection">redirection</a>
+                  </li>
+                  <li>
+                    <a href="#size" class="toc-h2 toc-link" data-title="size">size</a>
                   </li>
               </ul>
           </li>
@@ -536,7 +542,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <aside class="notice">
 The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
 </aside>
-<h2 id='read'>read</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+<h2 id='create'>create</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+
+</span></code></pre><h2 id='read'>read</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
 </span><span class="c1">// Request</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
@@ -675,10 +683,10 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 
 </span></code></pre>
 <p>Obtain a list of keys in the database.</p>
-<h2 id='redirection'>redirection</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+<h2 id='redirection'>redirection</h2><pre class="highlight json-doc tab-json-doc"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"1227.0.0.1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
@@ -686,6 +694,29 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Some requests require you to be talking to the swarm leader. In this case, you will get a response of the this nature, and should reconnect at the address and port given.</p>
+<h2 id='size'>size</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+
+</span><span class="c1">// Request</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"size"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">47</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1">// Response</span><span class="w">
+
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"size"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">624</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">47</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p>Returns the current size of your database in bytes.</p>
 
       </div>
       <div class="dark-box">
