@@ -259,9 +259,6 @@
                     <a href="#create" class="toc-h2 toc-link" data-title="create">create</a>
                   </li>
                   <li>
-                    <a href="#read" class="toc-h2 toc-link" data-title="read">read</a>
-                  </li>
-                  <li>
                     <a href="#update" class="toc-h2 toc-link" data-title="update">update</a>
                   </li>
                   <li>
@@ -532,7 +529,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 
 <ul>
 <li><code>data</code>: Complementary data for the response.</li>
-<li><code>response-id</code>: The <code>request-id</code> field of the initial request, if present.</li>
+<li><code>request-id</code>: The <code>request-id</code> field of the initial request, if present.</li>
 <li><code>error</code>: If present, this is an error string signifying that the request has failed.</li>
 </ul>
 
@@ -580,10 +577,14 @@ The <em>Bluzelle</em> database reads and writes values encoded in strings. It is
     </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre>
-<p>Creates a key value pair in the database. Data needs to be string encoded.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
-<h2 id='read'>read</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
+</span><span class="err">Creates</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">pair</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">database.</span><span class="w"> </span><span class="err">Data</span><span class="w"> </span><span class="err">needs</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">string</span><span class="w"> </span><span class="err">encoded.</span><span class="w">
+</span><span class="err">Create</span><span class="p">,</span><span class="w"> </span><span class="err">read</span><span class="p">,</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">delete</span><span class="w"> </span><span class="err">require</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">talking</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">swarm</span><span class="w"> </span><span class="err">leader.</span><span class="w"> </span><span class="err">In</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">case</span><span class="p">,</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">get</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">response</span><span class="p">,</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">should</span><span class="w"> </span><span class="err">reconnect</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">address</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">port</span><span class="w"> </span><span class="err">given.</span><span class="w">
+
+
+</span><span class="err">##</span><span class="w"> </span><span class="err">read</span><span class="w">
+
+</span><span class="err">```json-doc</span><span class="w">
+
 </span><span class="c1">// Request</span><span class="w">
 
 </span><span class="p">{</span><span class="w">
