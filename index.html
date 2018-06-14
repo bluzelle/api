@@ -256,22 +256,10 @@
             <a href="#websocket-api" class="toc-h1 toc-link" data-title="websocket-api">WebSocket API</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#create" class="toc-h2 toc-link" data-title="create">create</a>
+                    <a href="#steps-to-send-a-request-and-recieve-a-response" class="toc-h2 toc-link" data-title="steps-to-send-a-request-and-recieve-a-response">Steps to send a request and recieve a response</a>
                   </li>
                   <li>
-                    <a href="#update" class="toc-h2 toc-link" data-title="update">update</a>
-                  </li>
-                  <li>
-                    <a href="#delete" class="toc-h2 toc-link" data-title="delete">delete</a>
-                  </li>
-                  <li>
-                    <a href="#has" class="toc-h2 toc-link" data-title="has">has</a>
-                  </li>
-                  <li>
-                    <a href="#keys-2" class="toc-h2 toc-link" data-title="keys">keys</a>
-                  </li>
-                  <li>
-                    <a href="#size" class="toc-h2 toc-link" data-title="size">size</a>
+                    <a href="#example-messages-with-bluzelle-js" class="toc-h2 toc-link" data-title="example-messages-with-code-bluzelle-js-code">Example messages with <code>bluzelle-js</code></a>
                   </li>
               </ul>
           </li>
@@ -511,285 +499,68 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <h1 id='websocket-api'>WebSocket API</h1>
 <p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
 
-<hr>
-
-<p>Each WebSocket <strong>request</strong> is a JSON object and may have the following fields:</p>
-
-<ul>
-<li><code>cmd</code>: The identifier of the request. (ex. <code>&quot;read&quot;</code>, <code>&quot;update&quot;</code>, ...)</li>
-<li><code>data</code>: Complementary data for the request. </li>
-<li><code>bzn-api</code>: Used internally by the daemon. Set to constant <code>&quot;crud&quot;</code> for this guide.</li>
-<li><code>db-uuid</code>: The <code>UUID</code> for your database.</li>
-<li><code>request-id</code>: (Optional) An identifier for this request..</li>
-</ul>
-
-<hr>
-
-<p>Likewise, each WebSocket <strong>response</strong> from a <em>Bluzelle</em> daemon is a JSON object and may have the following fields:</p>
-
-<ul>
-<li><code>data</code>: Complementary data for the response.</li>
-<li><code>request-id</code>: The <code>request-id</code> field of the initial request, if present.</li>
-<li><code>error</code>: If present, this is an error string signifying that the request has failed.</li>
-</ul>
-
-<aside class="notice">
-The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
-</aside>
-<h2 id='create'>create</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
-</span><span class="c1">// Request</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"create"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myKey"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I2luY2x1ZGUgPG1vY2tzL21vY2tfbm9kZV9iYXNlLmhwcD4NCiNpbmNsdWRlIDxtb2Nrcy9tb2NrX3Nlc3Npb25fYmFzZS5ocHA+DQojaW5jbHVkZSA8bW9ja3MvbW9ja19yYWZ0X2Jhc2UuaHBwPg0KI2luY2x1ZGUgPG1vY2tzL21vY2tfc3RvcmFnZV9iYXNlLmhwcD4NCg=="</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80174b53-2dda-49f1-9d6a-6a780d4cceca"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
+<blockquote>
+<p>WebSocket database messages are JSON strings with embedded base64-encoded serial data.</p>
+</blockquote>
+<pre class="highlight json-doc tab-json-doc"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"database"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
-
-</span><span class="c1">// Successful Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="c1">// Failure Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_EXISTS"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="c1">// Redirection Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="err">Creates</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">pair</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">database.</span><span class="w"> </span><span class="err">Data</span><span class="w"> </span><span class="err">needs</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">string</span><span class="w"> </span><span class="err">encoded.</span><span class="w">
-</span><span class="err">Create</span><span class="p">,</span><span class="w"> </span><span class="err">read</span><span class="p">,</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">delete</span><span class="w"> </span><span class="err">require</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">talking</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">swarm</span><span class="w"> </span><span class="err">leader.</span><span class="w"> </span><span class="err">In</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">case</span><span class="p">,</span><span class="w"> </span><span class="err">you</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">get</span><span class="w"> </span><span class="err">this</span><span class="w"> </span><span class="err">response</span><span class="p">,</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">should</span><span class="w"> </span><span class="err">reconnect</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">address</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">port</span><span class="w"> </span><span class="err">given.</span><span class="w">
-
-
-</span><span class="err">##</span><span class="w"> </span><span class="err">read</span><span class="w">
-
-</span><span class="err">```json-doc</span><span class="w">
-
-</span><span class="c1">// Request</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-
-</span><span class="c1">// Successful Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"He932NLA"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="c1">// Failure Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_NOT_FOUND"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="c1">// Redirection Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-
 </span></code></pre>
-<p>Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
-<h2 id='update'>update</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
-</span><span class="c1">// Request</span><span class="w">
+<blockquote>
+<p>The JSON is considered static except for the value of the &quot;msg&quot; field, which may vary.</p>
+</blockquote>
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GNJjA39s"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<p>Database requests are <a href="https://github.com/google/protobuf">protobuf</a> serial output embedded in JSON. The master database protofile is given <a href="https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto">here</a>. The protobuf message type forrequests is <code>database_msg</code>.</p>
 
+<p>Database responses are direct serial output through WebSocket. The protobuf message type for responses is <code>database_response</code>.</p>
+<h2 id='steps-to-send-a-request-and-recieve-a-response'>Steps to send a request and recieve a response</h2>
+<ol>
+<li>Generate a <code>database_msg</code> object as specified in <a href="https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto">database.proto</a>.</li>
+<li>Serialize the message.</li>
+<li>Convert the serial data to a base64 string.</li>
+<li>Embed the base64 string into <code>&quot;{ &quot;bzn-api&quot;: &quot;database&quot;, &quot;msg&quot;: &quot;YOUR STRING HERE&quot; }&quot;</code>.</li>
+<li>Establish a WebSocket connection to a Bluzelle node and send the message as a string.</li>
+<li>The response, coming as raw bytes, should be interpreted as a <code>database_response</code>.<br></li>
+</ol>
+<h2 id='example-messages-with-bluzelle-js'>Example messages with <code>bluzelle-js</code></h2><pre class="highlight plaintext"><code>// uuid: '8078e15c-ac47-4db9-83df-da6dba71231a'
 
-</span><span class="c1">// Successful Response</span><span class="w">
+bluzelle.create('hello', 'world');
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="c1">// Failure Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_NOT_FOUND"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="c1">// Redirection Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<p>Updates data to a given key.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
-<h2 id='delete'>delete</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
-</span><span class="c1">// Request</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delete"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+    "bzn-api":"database",
+    "msg":"Uj0SKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEARSERIFaGVsbG8aCAEid29ybGQi"
+}
 
 
-</span><span class="c1">// Successful Response</span><span class="w">
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+bluzelle.read('myKey');
 
-</span><span class="c1">// Failure Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RECORD_NOT_FOUND"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="c1">// Redirection Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"leader-host"</span><span class="p">:</span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"peer1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"leader-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">49153</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NOT_THE_LEADER"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<p>Deletes a given key.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.</p>
-<h2 id='has'>has</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
-</span><span class="c1">// Request</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"has"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mykey"</span><span class="p">,</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+    "bzn-api":"database",
+    "msg":"UjMSKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEAZaBxIFbXlLZXk="
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
 
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"key-exists"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">    </span><span class="c1">// "key-exists" : false</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">99</span><span class="w">
-</span><span class="p">}</span><span class="w">
+bluzelle.remove('hello');
 
-</span></code></pre>
-<p>Query if a key exists in the database.</p>
-<h2 id='keys-2'>keys</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
-
-</span><span class="c1">// Request</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"keys"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+    "bzn-api":"database",
+    "msg":"UjMSKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEAdqBxIFaGVsbG8="
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
 
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"key1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"key2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"world"</span><span class="p">,</span><span class="w"> </span><span class="c1">...</span><span class="p">]</span><span class="w">   </span><span class="c1">// "keys": null</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="w">
-</span><span class="p">}</span><span class="w">
+bluzelle.has('abcd');
 
-</span></code></pre>
-<p>Obtain a list of keys in the database.</p>
-<h2 id='size'>size</h2><pre class="highlight json-doc tab-json-doc"><code><span class="w">
-
-</span><span class="c1">// Request</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"bzn-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crud"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cmd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"size"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"db-uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4982e0b0-0b2f-4c3a-b39f-26878e2ac814"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"request-id"</span><span class="p">:</span><span class="w"> </span><span class="mi">47</span><span class="w">
-</span><span class="p">}</span><span class="w">
+{
+    "bzn-api":"database",
+    "msg":"UjISKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEAlyBhIEYWJjZA=="
+}
 
 
-</span><span class="c1">// Response</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"data"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"size"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">624</span><span class="w">    </span><span class="c1">// "size" : 0</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"request-id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">47</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<p>Returns the size of your database in bytes.</p>
-
+</code></pre>
       </div>
       <div class="dark-box">
       </div>
