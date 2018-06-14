@@ -296,319 +296,70 @@ Fails when a response is not received from the connection.
 
 The *Bluzelle* architecture consists of a request-response system through WebSockets.
 
--------
-
-Each WebSocket **request** is a JSON object and may have the following fields:
-
-- `cmd`: The identifier of the request. (ex. `"read"`, `"update"`, ...)
-- `data`: Complementary data for the request. 
-- `bzn-api`: Used internally by the daemon. Set to constant `"crud"` for this guide.
-- `db-uuid`: The `UUID` for your database.
-- `request-id`: (Optional) An identifier for this request..
-
--------
-
-Likewise, each WebSocket **response** from a *Bluzelle* daemon is a JSON object and may have the following fields:
-
-- `data`: Complementary data for the response.
-- `request-id`: The `request-id` field of the initial request, if present.
-- `error`: If present, this is an error string signifying that the request has failed.
-
-
-<aside class="notice">
-The <em>Bluzelle</em> database reads and writes values encoded in strings. It is the responsibility of the programmer to interpret these values to meet their desired functionality.
-</aside>
-
-## create
+> WebSocket database messages are JSON strings with embedded base64-encoded serial data.
 
 ```json-doc
-
-// Request
-
 {
-  "bzn-api": "crud",
-  "cmd": "create",
-  "data": {
-      "key": "myKey",
-      "value": "I2luY2x1ZGUgPG1vY2tzL21vY2tfbm9kZV9iYXNlLmhwcD4NCiNpbmNsdWRlIDxtb2Nrcy9tb2NrX3Nlc3Npb25fYmFzZS5ocHA+DQojaW5jbHVkZSA8bW9ja3MvbW9ja19yYWZ0X2Jhc2UuaHBwPg0KI2luY2x1ZGUgPG1vY2tzL21vY2tfc3RvcmFnZV9iYXNlLmhwcD4NCg=="
-  },
-  "db-uuid": "80174b53-2dda-49f1-9d6a-6a780d4cceca",
-  "request-id": 33
+    "bzn-api": "database",
+    "msg": ""
 }
-
-
-// Successful Response
-
-{
-  "request-id": 33
-}
-
-// Failure Response
-
-{
-	"error" : "RECORD_EXISTS",
-	"request-id" : 33
-}
-
-// Redirection Response
-
-{
-    "data" : {
-        "leader-host":"127.0.0.1",
-        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
-        "leader-name" : "peer1",
-        "leader-port": 49153
-    },
-    "error" : "NOT_THE_LEADER",
-    "request-id" : 33
-}
-
-Creates a key value pair in the database. Data needs to be string encoded.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
-
-
-## read
-
-```json-doc
-
-// Request
-
-{
-  "cmd": "read",
-  "data": {
-      "key": "mykey"
-  },
-  "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 13
-}
-
-
-// Successful Response
-
-{
-  "data": {
-      "value": "He932NLA"
-  },
-  "request-id": 13
-}
-
-// Failure Response
-
-{
-  "error": "RECORD_NOT_FOUND",
-  "request-id": 13
-}
-
-// Redirection Response
-
-{
-    "data" : {
-        "leader-host":"127.0.0.1",
-        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
-        "leader-name" : "peer1",
-        "leader-port": 49153
-    },
-    "error" : "NOT_THE_LEADER",
-    "request-id" : 13
-}
- 
-
 ```
 
+> The JSON is considered static except for the value of the "msg" field, which may vary.
 
-Reads data from a given key. Data is in the form of a <code>base64</code>-encoded string.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
+Database requests are [protobuf](https://github.com/google/protobuf) serial output embedded in JSON. The master database protofile is given [here](https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto). The protobuf message type forrequests is `database_msg`.
 
-
-
-## update
-
-```json-doc
-
-// Request
-
-{
-  "cmd": "update",
-  "data": {
-      "key": "mykey",
-      "value": "GNJjA39s"
-  },
-  "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 45
-}
+Database responses are direct serial output through WebSocket. The protobuf message type for responses is `database_response`.
 
 
-// Successful Response
+## Steps to send a request and recieve a response
 
-{
-  "request-id": 45
-}
+1. Generate a `database_msg` object as specified in [database.proto](https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto).
+2. Serialize the message.
+3. Convert the serial data to a base64 string.
+4. Embed the base64 string into `"{ "bzn-api": "database", "msg": "YOUR STRING HERE" }"`.
+5. Establish a WebSocket connection to a Bluzelle node and send the message as a string.
+6. The response, coming as raw bytes, should be interpreted as a `database_response`.  
 
-// Failure Response
 
-{
-	"error" : "RECORD_NOT_FOUND",
-	"request-id" : 45
-}
-
-// Redirection Response
-
-{
-    "data" : {
-        "leader-host":"127.0.0.1",
-        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
-        "leader-name" : "peer1",
-        "leader-port": 49153
-    },
-    "error" : "NOT_THE_LEADER",
-    "request-id" : 45
-}
+## Example messages with `bluzelle-js`
 
 ```
+// uuid: '8078e15c-ac47-4db9-83df-da6dba71231a'
 
-Updates data to a given key.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
-
-
-
-
-## delete
-
-```json-doc
-
-// Request
+bluzelle.create('hello', 'world');
 
 {
-  "cmd": "delete",
-  "data": {
-      "key": "mykey",
-  },
-  "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 45
+    "bzn-api":"database",
+    "msg":"Uj0SKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEARSERIFaGVsbG8aCAEid29ybGQi"
 }
 
 
-// Successful Response
+
+bluzelle.read('myKey');
 
 {
-  "request-id": 45
+    "bzn-api":"database",
+    "msg":"UjMSKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEAZaBxIFbXlLZXk="
 }
 
-// Failure Response
+
+
+bluzelle.remove('hello');
 
 {
-	"error" : "RECORD_NOT_FOUND",
-	"request-id" : 45
+    "bzn-api":"database",
+    "msg":"UjMSKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEAdqBxIFaGVsbG8="
 }
 
-// Redirection Response
+
+
+bluzelle.has('abcd');
 
 {
-    "data" : {
-        "leader-host":"127.0.0.1",
-        "leader-id" : "137a8403-52ec-43b7-8083-91391d4c5e67",
-        "leader-name" : "peer1",
-        "leader-port": 49153
-    },
-    "error" : "NOT_THE_LEADER",
-    "request-id" : 45
+    "bzn-api":"database",
+    "msg":"UjISKAokODA3OGUxNWMtYWM0Ny00ZGI5LTgzZGYtZGE2ZGJhNzEyMzFhEAlyBhIEYWJjZA=="
 }
+
 
 ```
-
-Deletes a given key.
-Create, read, update and delete require you to be talking to the swarm leader. In this case, you will get this response, and should reconnect at the address and port given.
-
-
-
-
-## has
-
-```json-doc
-
-// Request
-
-{
-  "cmd": "has",
-  "data": {
-      "key": "mykey",
-  },
-  "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 99
-}
-
-
-// Response
-
-{
-	"data" : {
-	    "key-exists" : true    // "key-exists" : false
-	},
-	"request-id" : 99
-}
-
-```
-
-Query if a key exists in the database.
-
-
-## keys
-
-```json-doc
-
-
-// Request
-
-{
-  "cmd": "keys",
-  "bzn-api": "crud",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 45
-}
-
-
-// Response
-
-{
-  "data": {
-      "keys": ["key1", "key2", "hello", "world", ...]   // "keys": null
-  },
-  "request-id": 45
-}
-
-```
-
-Obtain a list of keys in the database.
-
-
-## size
-
-```json-doc
-
-
-// Request
-
-{
-  "bzn-api": "crud",
-  "cmd": "size",
-  "db-uuid": "4982e0b0-0b2f-4c3a-b39f-26878e2ac814",
-  "request-id": 47
-}
-
-
-// Response
-
-{
-	"data" : {
-	    "size" : 624    // "size" : 0
-	},
-	"request-id" : 47
-}
-
-```
-
-Returns the size of your database in bytes.
