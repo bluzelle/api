@@ -1,3 +1,8 @@
+
+# [View Bluzelle API Online](https://bluzelle.github.io/api/)
+
+----------
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/lord/img/master/logo-slate.png" alt="Slate: API Documentation Generator" width="226">
   <br>
@@ -30,8 +35,6 @@ Features
 * **RTL Support** Full right-to-left layout for RTL languages such as Arabic, Persian (Farsi), Hebrew etc.
 
 Getting started with Slate is super easy! Simply fork this repository and follow the instructions below. Or, if you'd like to check out what Slate is capable of, take a look at the [sample docs](http://lord.github.io/slate).
-
-# [View API Online](https://bluzelle.github.io/api/)
 
 -----------
 
