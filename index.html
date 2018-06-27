@@ -281,19 +281,14 @@
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
 </code></pre>
-<p>Our Lovelace release will provide developer tools for <em>JavaScript</em>, <em>NEO</em>, and <em>Soliditity</em>, as well as a generic <em>WebSocket</em> interface for communicating with the swarm.</p>
-
 <p>This documentation covers our <strong>JavaScript</strong> and <strong>WebSocket</strong> tools only. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
 <h2 id='crud-application'>CRUD Application</h2>
-<p>Click <a href="http://13.78.135.208/">here</a> to access our online <em>Bluzelle</em> CRUD application, developed using the JavaScript library.</p>
-<h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code>
-<span class="c1">// promise syntax</span>
-<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.1.1.1:8000'</span><span class="p">,</span> <span class="nx">UUID</span><span class="p">);</span>
+<p>Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that is built with the Bluzelle libraries. </p>
 
-<span class="c1">// async/await syntax</span>
-<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.1.1.1:8000'</span><span class="p">,</span> <span class="nx">UUID</span><span class="p">);</span>
+<p>You can find binaries in our <a href="https://bluzelle.jfrog.io/bluzelle/list/OSX/">OSX</a> and <a href="https://bluzelle.jfrog.io/bluzelle/list/debian-local/">Debian</a> repositories, or build the project yourself from the <a href="https://github.com/bluzelle/crud">GitHub repository</a>.</p>
+<h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.2.3.4:51010'</span><span class="p">,</span> <span class="s1">'96764e2f-2273-4404-97c0-a05b5e36ea66'</span><span class="p">);</span>
 </code></pre>
-<p>Configures the address, port, and UUID of the connection. This may be called multiple times to update the connection.</p>
+<p>Configures the address, port, and UUID of the connection. This may be called multiple times, and between other API calls.</p>
 
 <p><em>Bluzelle</em> uses <code>UUID</code>&#39;s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.</p>
 
@@ -316,15 +311,9 @@
 </tbody></table>
 <h3 id='returns'>Returns</h3>
 <p>Nothing</p>
-<h3 id='fail-conditions'>Fail Conditions</h3>
-<p>Fails when a connection could not be established.</p>
 
 <aside class="warning">
 You must replace <code>UUID</code> with your personal UUID.
-</aside>
-
-<aside class="notice">
-This function is an abstraction over establishing a WebSocket connection, and thus does not wrap a particular command in the WebSocket API.
 </aside>
 <h2 id='create-key-value'>create(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -352,8 +341,8 @@ This function is an abstraction over establishing a WebSocket connection, and th
 </tr>
 </tbody></table>
 <h3 id='returns-2'>Returns</h3>
-<p>Nothing.</p>
-<h3 id='fail-conditions-2'>Fail Conditions</h3>
+<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> resolving to no value.</p>
+<h3 id='fail-conditions'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or invalid value.</p>
 <h2 id='read-key'>read(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -377,8 +366,8 @@ This function is an abstraction over establishing a WebSocket connection, and th
 </tr>
 </tbody></table>
 <h3 id='returns-3'>Returns</h3>
-<p>The value of the key. This is anything that is valid in the <em>Bluzelle</em> database. (See <a href="#update-key-value"><code>update(key, value)</code></a>)</p>
-<h3 id='fail-conditions-3'>Fail Conditions</h3>
+<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> resolving the value of the key. This is anything that is valid in the <em>Bluzelle</em> database. (See <a href="#update-key-value"><code>update(key, value)</code></a>)</p>
+<h3 id='fail-conditions-2'>Fail Conditions</h3>
 <p>Fails when a response is not recieved or the key does not exist in the database.</p>
 <h2 id='update-key-value'>update(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -392,9 +381,9 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <pre class="highlight javascript tab-javascript"><code>
 <span class="kr">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
 
-<span class="nx">arr</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span> <span class="c1">// Fill 4 in slots 200-400.</span>
+<span class="c1">// Fill arr with data</span>
 
-<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">buffer</span><span class="p">);</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="nx">arr</span><span class="p">);</span>
 </code></pre>
 <p>Update a field in the database.</p>
 
@@ -416,8 +405,8 @@ This function is an abstraction over establishing a WebSocket connection, and th
 </tr>
 </tbody></table>
 <h3 id='returns-4'>Returns</h3>
-<p>Nothing.</p>
-<h3 id='fail-conditions-4'>Fail Conditions</h3>
+<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> resolving to nothing.</p>
+<h3 id='fail-conditions-3'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or invalid value.</p>
 <h2 id='remove-key'>remove(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -441,16 +430,10 @@ This function is an abstraction over establishing a WebSocket connection, and th
 </tr>
 </tbody></table>
 <h3 id='returns-5'>Returns</h3>
-<p>Nothing.</p>
-<h3 id='fail-conditions-5'>Fail Conditions</h3>
+<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> resolving to nothing.</p>
+<h3 id='fail-conditions-4'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection or key not in database.</p>
-<h2 id='has-key'>has(key)</h2>
-<blockquote>
-<p>Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.</p>
-
-<p>You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of <code>then</code>.</p>
-</blockquote>
-<pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
+<h2 id='has-key'>has(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">hasMyKey</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
 
 <span class="c1">// async/await syntax</span>
@@ -472,8 +455,8 @@ This function is an abstraction over establishing a WebSocket connection, and th
 </tr>
 </tbody></table>
 <h3 id='returns-6'>Returns</h3>
-<p>A boolean value, <code>true</code> of <code>false</code>, representing whether or not the key is in the database.</p>
-<h3 id='fail-conditions-6'>Fail Conditions</h3>
+<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> resolving to a boolean value, <code>true</code> of <code>false</code>, representing whether or not the key is in the database.</p>
+<h3 id='fail-conditions-5'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection.</p>
 <h2 id='keys'>keys()</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">keys</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">keys</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
@@ -493,8 +476,8 @@ This function is an abstraction over establishing a WebSocket connection, and th
 </thead><tbody>
 </tbody></table>
 <h3 id='returns-7'>Returns</h3>
-<p>An array of strings representing keys in the database. ex. <code>[&quot;Key1&quot;, &quot;Key2&quot;, ...]</code></p>
-<h3 id='fail-conditions-7'>Fail Conditions</h3>
+<p>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> resolving to an array of strings representing keys in the database. ex. <code>[&quot;Key1&quot;, &quot;Key2&quot;, ...]</code></p>
+<h3 id='fail-conditions-6'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection.</p>
 <h1 id='websocket-api'>WebSocket API</h1>
 <p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
@@ -511,7 +494,7 @@ This function is an abstraction over establishing a WebSocket connection, and th
 <p>The JSON is considered static except for the value of the &quot;msg&quot; field, which may vary.</p>
 </blockquote>
 
-<p>Database requests are <a href="https://github.com/google/protobuf">protobuf</a> serial output embedded in JSON. The master database protofile is given <a href="https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto">here</a>. The protobuf message type forrequests is <code>database_msg</code>.</p>
+<p>Database requests are <a href="https://github.com/google/protobuf">protobuf</a> serial output embedded in JSON. The master database protofile is given <a href="https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto">here</a>. The protobuf message type for requests is <code>database_msg</code>.</p>
 
 <p>Database responses are direct serial output through WebSocket. The protobuf message type for responses is <code>database_response</code>.</p>
 <h2 id='steps-to-send-a-request-and-recieve-a-response'>Steps to send a request and recieve a response</h2>
