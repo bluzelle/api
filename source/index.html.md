@@ -30,16 +30,14 @@ npm install bluzelle
 const bluzelle = require('bluzelle');
 ```
 
-Our Lovelace release will provide developer tools for *JavaScript*, *NEO*, and *Soliditity*, as well as a generic *WebSocket* interface for communicating with the swarm.
-
 This documentation covers our **JavaScript** and **WebSocket** tools only. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
 
 
 ## CRUD Application
 
-Click [here](http://13.78.135.208/) to access our online *Bluzelle* CRUD application, developed using the JavaScript library.
+Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that is built with the Bluzelle libraries. 
 
-
+You can find binaries in our [OSX](https://bluzelle.jfrog.io/bluzelle/list/OSX/) and [Debian](https://bluzelle.jfrog.io/bluzelle/list/debian-local/) repositories, or build the project yourself from the [GitHub repository](https://github.com/bluzelle/crud).
 
 
 # JS API
@@ -49,15 +47,10 @@ Click [here](http://13.78.135.208/) to access our online *Bluzelle* CRUD applica
 
 
 ```javascript
-
-// promise syntax
-bluzelle.connect('ws://1.1.1.1:8000', UUID);
-
-// async/await syntax
-bluzelle.connect('ws://1.1.1.1:8000', UUID);
+bluzelle.connect('ws://1.2.3.4:51010', '96764e2f-2273-4404-97c0-a05b5e36ea66');
 ```
 
-Configures the address, port, and UUID of the connection. This may be called multiple times to update the connection.
+Configures the address, port, and UUID of the connection. This may be called multiple times, and between other API calls.
 
 *Bluzelle* uses `UUID`'s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.
 
@@ -75,17 +68,11 @@ uuid     | The universally unique identifier (UUID), <a href="https://en.wikiped
 Nothing
 
 
-### Fail Conditions
-
-Fails when a connection could not be established.
 
 <aside class="warning">
 You must replace <code>UUID</code> with your personal UUID.
 </aside>
 
-<aside class="notice">
-This function is an abstraction over establishing a WebSocket connection, and thus does not wrap a particular command in the WebSocket API.
-</aside>
 
 ## create(key, value)
 
@@ -112,7 +99,7 @@ value     | The value to set the key
 
 ### Returns
 
-Nothing.
+A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) resolving to no value.
 
 
 ### Fail Conditions
@@ -143,7 +130,7 @@ key      |  The key to retrieve.
 
 ### Returns
 
-The value of the key. This is anything that is valid in the *Bluzelle* database. (See <a href="#update-key-value">`update(key, value)`</a>)
+A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) resolving the value of the key. This is anything that is valid in the *Bluzelle* database. (See <a href="#update-key-value">`update(key, value)`</a>)
 
 
 ### Fail Conditions
@@ -168,9 +155,9 @@ await bluzelle.update('mykey', { a: 13 });
 
 const arr = new Uint8Array(1000);
 
-arr.fill(4, 200, 400); // Fill 4 in slots 200-400.
+// Fill arr with data
 
-await bluzelle.update('mykey', arr.buffer);
+await bluzelle.update('mykey', arr);
 ```
 
 
@@ -186,7 +173,7 @@ value     | The value to set the key
 
 ### Returns
 
-Nothing.
+A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) resolving to nothing.
 
 
 ### Fail Conditions
@@ -218,7 +205,7 @@ key       | The name of the key to delete.
 
 ### Returns
 
-Nothing.
+A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) resolving to nothing.
 
 
 ### Fail Conditions
@@ -227,10 +214,6 @@ Fails when a response is not received from the connection or key not in database
 
 
 ## has(key)
-
-> Our JavaScript library makes extensive use of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript promises</a> to wrap the underlying request-response architecture.
-
-> You may also use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async/await</a> syntax to avoid the use of `then`.
 
 
 ```javascript
@@ -253,7 +236,7 @@ key       | The name of the key to query
 
 ### Returns
 
-A boolean value, `true` of `false`, representing whether or not the key is in the database.
+A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) resolving to a boolean value, `true` of `false`, representing whether or not the key is in the database.
 
 
 ### Fail Conditions
@@ -283,7 +266,7 @@ Argument  | Description
 
 ### Returns
 
-An array of strings representing keys in the database. ex. `["Key1", "Key2", ...]`
+A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) resolving to an array of strings representing keys in the database. ex. `["Key1", "Key2", ...]`
 
 
 ### Fail Conditions
@@ -307,7 +290,7 @@ The *Bluzelle* architecture consists of a request-response system through WebSoc
 
 > The JSON is considered static except for the value of the "msg" field, which may vary.
 
-Database requests are [protobuf](https://github.com/google/protobuf) serial output embedded in JSON. The master database protofile is given [here](https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto). The protobuf message type forrequests is `database_msg`.
+Database requests are [protobuf](https://github.com/google/protobuf) serial output embedded in JSON. The master database protofile is given [here](https://github.com/bluzelle/swarmDB/blob/devel/proto/database.proto). The protobuf message type for requests is `database_msg`.
 
 Database responses are direct serial output through WebSocket. The protobuf message type for responses is `database_response`.
 
