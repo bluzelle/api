@@ -33,11 +33,35 @@ const bluzelle = require('bluzelle');
 This documentation covers our **JavaScript** and **WebSocket** tools only. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
 
 
+
+
 ## CRUD Application
 
 Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that is built with the Bluzelle libraries. 
 
 You can find binaries in our [OSX](https://bluzelle.jfrog.io/bluzelle/list/OSX/) and [Debian](https://bluzelle.jfrog.io/bluzelle/list/debian-local/) repositories, or build the project yourself from the [GitHub repository](https://github.com/bluzelle/crud).
+
+
+# Sample Application
+
+The Bluzelle JavaScript library works with promises to model asynchronous behavior. Ensure that dependent calls to the Bluzelle database are within `.then()` calls as in the sample application to the right. Also ensure that promises errors are caught and handled.
+
+```javascript
+const bluzelle = require('bluzelle');
+  
+bluzelle.connect('ws://testnet.bluzelle.com:51010', '45498479-2447-47a6-8c36-efa5d251a283');
+
+
+bluzelle.create('myKey', 'myValue').then(() => {
+
+    bluzelle.read('myKey').then(value => {
+
+        console.log(value); // 'myValue'
+
+    }).catch(e => console.log(e.message));
+
+}).catch(e => console.log(e.message));
+```
 
 
 # JS API
