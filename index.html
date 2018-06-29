@@ -227,6 +227,9 @@
               </ul>
           </li>
           <li>
+            <a href="#sample-application" class="toc-h1 toc-link" data-title="sample-application">Sample Application</a>
+          </li>
+          <li>
             <a href="#js-api" class="toc-h1 toc-link" data-title="js-api">JS API</a>
               <ul class="toc-list-h2">
                   <li>
@@ -286,7 +289,23 @@
 <p>Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that is built with the Bluzelle libraries. </p>
 
 <p>You can find binaries in our <a href="https://bluzelle.jfrog.io/bluzelle/list/OSX/">OSX</a> and <a href="https://bluzelle.jfrog.io/bluzelle/list/debian-local/">Debian</a> repositories, or build the project yourself from the <a href="https://github.com/bluzelle/crud">GitHub repository</a>.</p>
-<h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.2.3.4:51010'</span><span class="p">,</span> <span class="s1">'96764e2f-2273-4404-97c0-a05b5e36ea66'</span><span class="p">);</span>
+<h1 id='sample-application'>Sample Application</h1>
+<p>The Bluzelle JavaScript library works with promises to model asynchronous behavior. Ensure that dependent calls to the Bluzelle database are within <code>.then()</code> calls as in the sample application to the right. Also ensure that promises errors are caught and handled.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
+
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://testnet.bluzelle.com:51010'</span><span class="p">,</span> <span class="s1">'45498479-2447-47a6-8c36-efa5d251a283'</span><span class="p">);</span>
+
+
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'myKey'</span><span class="p">,</span> <span class="s1">'myValue'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+    <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s1">'myKey'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 'myValue'</span>
+
+    <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">));</span>
+
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">));</span>
+</code></pre><h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.2.3.4:51010'</span><span class="p">,</span> <span class="s1">'96764e2f-2273-4404-97c0-a05b5e36ea66'</span><span class="p">);</span>
 </code></pre>
 <p>Configures the address, port, and UUID of the connection. This may be called multiple times, and between other API calls.</p>
 
