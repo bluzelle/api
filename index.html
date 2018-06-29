@@ -289,9 +289,7 @@
 <p>Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that is built with the Bluzelle libraries. </p>
 
 <p>You can find binaries in our <a href="https://bluzelle.jfrog.io/bluzelle/list/OSX/">OSX</a> and <a href="https://bluzelle.jfrog.io/bluzelle/list/debian-local/">Debian</a> repositories, or build the project yourself from the <a href="https://github.com/bluzelle/crud">GitHub repository</a>.</p>
-<h1 id='sample-application'>Sample Application</h1>
-<p>The Bluzelle JavaScript library works with promises to model asynchronous behavior. Ensure that dependent calls to the Bluzelle database are within <code>.then()</code> calls as in the sample application to the right. Also ensure that promises errors are caught and handled.</p>
-<pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
+<h1 id='sample-application'>Sample Application</h1><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
 
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://testnet.bluzelle.com:51010'</span><span class="p">,</span> <span class="s1">'45498479-2447-47a6-8c36-efa5d251a283'</span><span class="p">);</span>
 
@@ -305,13 +303,15 @@
     <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">));</span>
 
 <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">));</span>
-</code></pre><h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.2.3.4:51010'</span><span class="p">,</span> <span class="s1">'96764e2f-2273-4404-97c0-a05b5e36ea66'</span><span class="p">);</span>
+</code></pre>
+<p>The Bluzelle JavaScript library works with promises to model asynchronous behavior. Ensure that dependent calls to the Bluzelle database are within <code>.then()</code> calls as in the sample application to the right. Also ensure that promises errors are caught and handled.</p>
+
+<p>You can also program using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">ES6 async/await syntax</a> to avoid excessive use of <code>.then()</code>.</p>
+<h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.2.3.4:51010'</span><span class="p">,</span> <span class="s1">'96764e2f-2273-4404-97c0-a05b5e36ea66'</span><span class="p">);</span>
 </code></pre>
 <p>Configures the address, port, and UUID of the connection. This may be called multiple times, and between other API calls.</p>
 
 <p><em>Bluzelle</em> uses <code>UUID</code>&#39;s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.</p>
-
-<hr>
 
 <table><thead>
 <tr>
@@ -342,8 +342,6 @@ You must replace <code>UUID</code> with your personal UUID.
 </code></pre>
 <p>Creates a field. <em>Bluzelle</em> supports JavaScript types that are <code>JSON</code>-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.</p>
 
-<hr>
-
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -370,8 +368,6 @@ You must replace <code>UUID</code> with your personal UUID.
 <span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
 </code></pre>
 <p>Retrieve the value of a key.</p>
-
-<hr>
 
 <table><thead>
 <tr>
@@ -406,8 +402,6 @@ You must replace <code>UUID</code> with your personal UUID.
 </code></pre>
 <p>Update a field in the database.</p>
 
-<hr>
-
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -434,8 +428,6 @@ You must replace <code>UUID</code> with your personal UUID.
 <span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">);</span>
 </code></pre>
 <p>Deletes a field from the database.</p>
-
-<hr>
 
 <table><thead>
 <tr>
