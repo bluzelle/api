@@ -13,25 +13,9 @@ search: true
 
 # Introduction
 
-Bluzelle combines the sharing economy with the token economy - renting individuals' computer storage space to earn tokens while dApp developers use tokens to have their dApp's data stored and managed.
+Bluzelle combines the sharing economy with the token economy - renting individuals' computer storage space to earn tokens while dApp developers use tokens to have their dApp's data stored and manage d.
 
-
-# Getting Bluzelle
-
-> Our client JavaScript library can be installed through `npm`.
-
-```shell
-npm install bluzelle
-```
-
-> You import *Bluzelle* into your application the same as any other library.
-
-```javascript
-const bluzelle = require('bluzelle');
-```
-
-This documentation covers our **JavaScript** and **WebSocket** tools only. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
-
+This guide covers API for our JavaScript & Python libraries, Solidity contracts, and raw WebSocket communications.
 
 
 
@@ -42,7 +26,27 @@ Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that
 You can find binaries in our [OSX](https://bluzelle.jfrog.io/bluzelle/list/OSX/) and [Debian](https://bluzelle.jfrog.io/bluzelle/list/debian-local/) repositories, or build the project yourself from the [GitHub repository](https://github.com/bluzelle/crud).
 
 
-# Sample Application
+# JS API
+
+## Installation
+
+> Our client JavaScript library can be installed through `npm`.
+
+```javascript
+npm install bluzelle
+```
+
+> You import *Bluzelle* into your application the same as any other library.
+
+```javascript
+const bluzelle = require('bluzelle');
+```
+
+This portion of the documentation covers our **JavaScript** tools. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
+
+
+
+## Sample Application
 
 ```javascript
 const bluzelle = require('bluzelle');
@@ -68,7 +72,7 @@ You can also program using [ES6 async/await syntax](https://developer.mozilla.or
 
 
 
-# JS API
+--------------
 
 
 ## connect(ws, uuid)
@@ -76,6 +80,11 @@ You can also program using [ES6 async/await syntax](https://developer.mozilla.or
 
 ```javascript
 bluzelle.connect('ws://1.2.3.4:51010', '96764e2f-2273-4404-97c0-a05b5e36ea66');
+```
+
+
+```python
+b = pyBluzelle.create_connection("127.0.0.1", 51011, "137a8403-52ec-43b7-8083-91391d4c5e67")
 ```
 
 Configures the address, port, and UUID of the connection. This may be called multiple times, and between other API calls.
@@ -249,7 +258,6 @@ const hasMyKey = await bluzelle.has('mykey');
 
 Query to see if a key is in the database.
 
-----------
 
 Argument  | Description
 ----------|------------
@@ -280,7 +288,6 @@ const keys = await bluzelle.keys();
 
 Retrieve a list of all keys.
 
-----------
 
 Argument  | Description
 ----------|------------
@@ -294,6 +301,197 @@ A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Gl
 ### Fail Conditions
 
 Fails when a response is not received from the connection.
+
+
+
+--------------------
+
+
+
+
+
+# Python API
+
+## Installation
+
+```python
+import pyBluzelle
+```
+
+Please refer to the instructions [here](https://github.com/bluzelle/pyBluzelle).
+
+
+
+
+--------------
+
+
+## connect(host, port, uuid)
+
+
+```python
+b = pyBluzelle.create_connection(
+    "127.0.0.1", 
+    51011, 
+    "137a8403-52ec-43b7-8083-91391d4c5e67")
+```
+
+Configures the address, port, and UUID of the connection.
+
+*Bluzelle* uses `UUID`'s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.
+
+
+Argument  | Description
+----------|------------
+host       | The host name of the entry point.
+port      | The port of the entry point.
+uuid     | The universally unique identifier (UUID), <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 is recommended</a>
+
+
+### Returns
+
+A connection object.
+
+
+
+## create(key, value)
+
+
+```python
+b.create("myKey", "myValue")
+```
+
+
+Creates a field.
+
+
+
+Argument  | Description
+----------|------------
+key       | The name of the key
+value     | The value to set the key
+
+
+### Returns
+
+`True` if successful, `False` otherwise.
+
+
+## read(key)
+
+```python
+b.read('myKey');
+```
+
+
+Retrieve the value of a key.
+
+
+Argument  | Description
+----------|------------
+key      |  The key to retrieve.
+
+
+### Returns
+
+The value of the key, `None` otherwise.
+
+
+
+
+## update(key, value)
+
+```javascript
+b.update('myKey', 'myNewValue')
+```
+
+
+Updates a value in the database.
+
+
+Argument  | Description
+----------|------------
+key       | The name of the key to query
+value     | The value to set the key
+
+
+### Returns
+
+`True` if successful, `False` otherwise.
+
+
+
+
+## delete(key)
+
+
+```javascript
+b.remove('myKey')
+```
+
+
+Deletes a field from the database.
+
+
+Argument  | Description
+----------|------------
+key       | The name of the key to delete.
+
+
+### Returns
+
+`True` if successful, `False` otherwise.
+
+
+
+
+## has(key)
+
+
+```javascript
+b.has('myKey')
+```
+
+
+Query to see if a key is in the database.
+
+
+Argument  | Description
+----------|------------
+key       | The name of the key to query
+
+
+### Returns
+
+`True` if they key is in the database, `False` otherwise.
+
+
+
+## keys()
+
+```javascript
+b.keys()
+```
+
+
+Retrieve a list of all keys.
+
+
+Argument  | Description
+----------|------------
+
+
+### Returns
+
+A list of keys in the database.
+
+
+
+
+# Solidity API
+
+Please refer to the documentation of the solidity API [here](https://github.com/bluzelle/eth-oracle).
+
 
 
 
