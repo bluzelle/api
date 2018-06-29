@@ -44,8 +44,6 @@ You can find binaries in our [OSX](https://bluzelle.jfrog.io/bluzelle/list/OSX/)
 
 # Sample Application
 
-The Bluzelle JavaScript library works with promises to model asynchronous behavior. Ensure that dependent calls to the Bluzelle database are within `.then()` calls as in the sample application to the right. Also ensure that promises errors are caught and handled.
-
 ```javascript
 const bluzelle = require('bluzelle');
   
@@ -64,6 +62,12 @@ bluzelle.create('myKey', 'myValue').then(() => {
 ```
 
 
+The Bluzelle JavaScript library works with promises to model asynchronous behavior. Ensure that dependent calls to the Bluzelle database are within `.then()` calls as in the sample application to the right. Also ensure that promises errors are caught and handled.
+
+You can also program using [ES6 async/await syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) to avoid excessive use of `.then()`.
+
+
+
 # JS API
 
 
@@ -78,8 +82,6 @@ Configures the address, port, and UUID of the connection. This may be called mul
 
 *Bluzelle* uses `UUID`'s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.
 
-
----------
 
 Argument  | Description
 ----------|------------
@@ -113,7 +115,6 @@ await bluzelle.create('mykey', { a: 13 });
 Creates a field. *Bluzelle* supports JavaScript types that are `JSON`-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.
 
 
-----------
 
 Argument  | Description
 ----------|------------
@@ -145,7 +146,6 @@ const value = await bluzelle.read('mykey');
 
 Retrieve the value of a key.
 
-----------
 
 Argument  | Description
 ----------|------------
@@ -187,7 +187,6 @@ await bluzelle.update('mykey', arr);
 
 Update a field in the database.
 
-----------
 
 Argument  | Description
 ----------|------------
@@ -220,7 +219,6 @@ await bluzelle.remove('mykey');
 
 Deletes a field from the database.
 
-----------
 
 Argument  | Description
 ----------|------------
