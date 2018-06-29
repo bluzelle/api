@@ -4,11 +4,12 @@
   <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1, ma ximum-scale=1">
-    <title>Bluzelle API Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link href="images/favicon.ico" rel="icon" type="image/ico" />
     
+    <title>Bluzelle API Documentation</title>
+
     <style>
       .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
@@ -218,10 +219,7 @@
         <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
-            <a href="#introduction" class="toc-h1 toc-link">Introduction</a>
-          </li>
-          <li>
-            <a href="#getting-bluzelle" class="toc-h1 toc-link">Getting Bluzelle</a>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#crud-application" class="toc-h2 toc-link" data-title="crud-application">CRUD Application</a>
@@ -229,11 +227,14 @@
               </ul>
           </li>
           <li>
-            <a href="#sample-application" class="toc-h1 toc-link">Sample Application</a>
-          </li>
-          <li>
-            <a href="#js-api" class="toc-h1 toc-link">JS API</a>
+            <a href="#js-api" class="toc-h1 toc-link" data-title="js-api">JS API</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#installation" class="toc-h2 toc-link" data-title="installation">Installation</a>
+                  </li>
+                  <li>
+                    <a href="#sample-application" class="toc-h2 toc-link" data-title="sample-application">Sample Application</a>
+                  </li>
                   <li>
                     <a href="#connect-ws-uuid" class="toc-h2 toc-link" data-title="connect-ws-uuid">connect(ws, uuid)</a>
                   </li>
@@ -258,7 +259,39 @@
               </ul>
           </li>
           <li>
-            <a href="#websocket-api" class="toc-h1 toc-link">WebSocket API</a>
+            <a href="#python-api" class="toc-h1 toc-link" data-title="python-api">Python API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#installation-2" class="toc-h2 toc-link" data-title="installation">Installation</a>
+                  </li>
+                  <li>
+                    <a href="#connect-host-port-uuid" class="toc-h2 toc-link" data-title="connect-host-port-uuid">connect(host, port, uuid)</a>
+                  </li>
+                  <li>
+                    <a href="#create-key-value-2" class="toc-h2 toc-link" data-title="create-key-value">create(key, value)</a>
+                  </li>
+                  <li>
+                    <a href="#read-key-2" class="toc-h2 toc-link" data-title="read-key">read(key)</a>
+                  </li>
+                  <li>
+                    <a href="#update-key-value-2" class="toc-h2 toc-link" data-title="update-key-value">update(key, value)</a>
+                  </li>
+                  <li>
+                    <a href="#delete-key" class="toc-h2 toc-link" data-title="delete-key">delete(key)</a>
+                  </li>
+                  <li>
+                    <a href="#has-key-2" class="toc-h2 toc-link" data-title="has-key">has(key)</a>
+                  </li>
+                  <li>
+                    <a href="#keys-2" class="toc-h2 toc-link" data-title="keys">keys()</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#solidity-api" class="toc-h1 toc-link" data-title="solidity-api">Solidity API</a>
+          </li>
+          <li>
+            <a href="#websocket-api" class="toc-h1 toc-link" data-title="websocket-api">WebSocket API</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#steps-to-send-a-request-and-recieve-a-response" class="toc-h2 toc-link" data-title="steps-to-send-a-request-and-recieve-a-response">Steps to send a request and recieve a response</a>
@@ -274,24 +307,26 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Bluzelle combines the sharing economy with the token economy - renting individuals&#39; computer storage space to earn tokens while dApp developers use tokens to have their dApp&#39;s data stored and managed.</p>
-<h1 id='getting-bluzelle'>Getting Bluzelle</h1>
+<p>Bluzelle combines the sharing economy with the token economy - renting individuals&#39; computer storage space to earn tokens while dApp developers use tokens to have their dApp&#39;s data stored and manage d.</p>
+
+<p>This guide covers API for our JavaScript &amp; Python libraries, Solidity contracts, and raw WebSocket communications.</p>
+<h2 id='crud-application'>CRUD Application</h2>
+<p>Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that is built with the Bluzelle libraries. </p>
+
+<p>You can find binaries in our <a href="https://bluzelle.jfrog.io/bluzelle/list/OSX/">OSX</a> and <a href="https://bluzelle.jfrog.io/bluzelle/list/debian-local/">Debian</a> repositories, or build the project yourself from the <a href="https://github.com/bluzelle/crud">GitHub repository</a>.</p>
+<h1 id='js-api'>JS API</h1><h2 id='installation'>Installation</h2>
 <blockquote>
 <p>Our client JavaScript library can be installed through <code>npm</code>.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>npm install bluzelle
+<pre class="highlight javascript tab-javascript"><code><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">bluzelle</span>
 </code></pre>
 <blockquote>
 <p>You import <em>Bluzelle</em> into your application the same as any other library.</p>
 </blockquote>
 <pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
 </code></pre>
-<p>This documentation covers our <strong>JavaScript</strong> and <strong>WebSocket</strong> tools only. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
-<h2 id='crud-application'>CRUD Application</h2>
-<p>Bluzelle comes with a CRUD (Create, Read, Update, Delete, etc.) application that is built with the Bluzelle libraries. </p>
-
-<p>You can find binaries in our <a href="https://bluzelle.jfrog.io/bluzelle/list/OSX/">OSX</a> and <a href="https://bluzelle.jfrog.io/bluzelle/list/debian-local/">Debian</a> repositories, or build the project yourself from the <a href="https://github.com/bluzelle/crud">GitHub repository</a>.</p>
-<h1 id='sample-application'>Sample Application</h1><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
+<p>This portion of the documentation covers our <strong>JavaScript</strong> tools. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
+<h2 id='sample-application'>Sample Application</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
 
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://testnet.bluzelle.com:51010'</span><span class="p">,</span> <span class="s1">'45498479-2447-47a6-8c36-efa5d251a283'</span><span class="p">);</span>
 
@@ -309,7 +344,10 @@
 <p>The Bluzelle JavaScript library works with promises to model asynchronous behavior. Ensure that dependent calls to the Bluzelle database are within <code>.then()</code> calls as in the sample application to the right. Also ensure that promises errors are caught and handled.</p>
 
 <p>You can also program using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">ES6 async/await syntax</a> to avoid excessive use of <code>.then()</code>.</p>
-<h1 id='js-api'>JS API</h1><h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.2.3.4:51010'</span><span class="p">,</span> <span class="s1">'96764e2f-2273-4404-97c0-a05b5e36ea66'</span><span class="p">);</span>
+
+<hr>
+<h2 id='connect-ws-uuid'>connect(ws, uuid)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://1.2.3.4:51010'</span><span class="p">,</span> <span class="s1">'96764e2f-2273-4404-97c0-a05b5e36ea66'</span><span class="p">);</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">b</span> <span class="o">=</span> <span class="n">pyBluzelle</span><span class="o">.</span><span class="n">create_connection</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">,</span> <span class="mi">51011</span><span class="p">,</span> <span class="s">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">)</span>
 </code></pre>
 <p>Configures the address, port, and UUID of the connection. This may be called multiple times, and between other API calls.</p>
 
@@ -454,8 +492,6 @@ You must replace <code>UUID</code> with your personal UUID.
 </code></pre>
 <p>Query to see if a key is in the database.</p>
 
-<hr>
-
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -479,8 +515,6 @@ You must replace <code>UUID</code> with your personal UUID.
 </code></pre>
 <p>Retrieve a list of all keys.</p>
 
-<hr>
-
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -492,6 +526,151 @@ You must replace <code>UUID</code> with your personal UUID.
 <p>A <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promise</a> resolving to an array of strings representing keys in the database. ex. <code>[&quot;Key1&quot;, &quot;Key2&quot;, ...]</code></p>
 <h3 id='fail-conditions-6'>Fail Conditions</h3>
 <p>Fails when a response is not received from the connection.</p>
+
+<hr>
+<h1 id='python-api'>Python API</h1><h2 id='installation-2'>Installation</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">pyBluzelle</span>
+</code></pre>
+<p>Please refer to the instructions <a href="https://github.com/bluzelle/pyBluzelle">here</a>.</p>
+
+<hr>
+<h2 id='connect-host-port-uuid'>connect(host, port, uuid)</h2><pre class="highlight python tab-python"><code><span class="n">b</span> <span class="o">=</span> <span class="n">pyBluzelle</span><span class="o">.</span><span class="n">create_connection</span><span class="p">(</span>
+    <span class="s">"127.0.0.1"</span><span class="p">,</span> 
+    <span class="mi">51011</span><span class="p">,</span> 
+    <span class="s">"137a8403-52ec-43b7-8083-91391d4c5e67"</span><span class="p">)</span>
+</code></pre>
+<p>Configures the address, port, and UUID of the connection.</p>
+
+<p><em>Bluzelle</em> uses <code>UUID</code>&#39;s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>host</td>
+<td>The host name of the entry point.</td>
+</tr>
+<tr>
+<td>port</td>
+<td>The port of the entry point.</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>The universally unique identifier (UUID), <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 is recommended</a></td>
+</tr>
+</tbody></table>
+<h3 id='returns-8'>Returns</h3>
+<p>A connection object.</p>
+<h2 id='create-key-value-2'>create(key, value)</h2><pre class="highlight python tab-python"><code><span class="n">b</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">"myKey"</span><span class="p">,</span> <span class="s">"myValue"</span><span class="p">)</span>
+</code></pre>
+<p>Creates a field.</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key</td>
+</tr>
+<tr>
+<td>value</td>
+<td>The value to set the key</td>
+</tr>
+</tbody></table>
+<h3 id='returns-9'>Returns</h3>
+<p><code>True</code> if successful, <code>False</code> otherwise.</p>
+<h2 id='read-key-2'>read(key)</h2><pre class="highlight python tab-python"><code><span class="n">b</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">'myKey'</span><span class="p">);</span>
+</code></pre>
+<p>Retrieve the value of a key.</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The key to retrieve.</td>
+</tr>
+</tbody></table>
+<h3 id='returns-10'>Returns</h3>
+<p>The value of the key, <code>None</code> otherwise.</p>
+<h2 id='update-key-value-2'>update(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">b</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s1">'myKey'</span><span class="p">,</span> <span class="s1">'myNewValue'</span><span class="p">)</span>
+</code></pre>
+<p>Updates a value in the database.</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key to query</td>
+</tr>
+<tr>
+<td>value</td>
+<td>The value to set the key</td>
+</tr>
+</tbody></table>
+<h3 id='returns-11'>Returns</h3>
+<p><code>True</code> if successful, <code>False</code> otherwise.</p>
+<h2 id='delete-key'>delete(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">b</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'myKey'</span><span class="p">)</span>
+</code></pre>
+<p>Deletes a field from the database.</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key to delete.</td>
+</tr>
+</tbody></table>
+<h3 id='returns-12'>Returns</h3>
+<p><code>True</code> if successful, <code>False</code> otherwise.</p>
+<h2 id='has-key-2'>has(key)</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">b</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'myKey'</span><span class="p">)</span>
+</code></pre>
+<p>Query to see if a key is in the database.</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>The name of the key to query</td>
+</tr>
+</tbody></table>
+<h3 id='returns-13'>Returns</h3>
+<p><code>True</code> if they key is in the database, <code>False</code> otherwise.</p>
+<h2 id='keys-2'>keys()</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">b</span><span class="p">.</span><span class="nx">keys</span><span class="p">()</span>
+</code></pre>
+<p>Retrieve a list of all keys.</p>
+
+<table><thead>
+<tr>
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h3 id='returns-14'>Returns</h3>
+<p>A list of keys in the database.</p>
+<h1 id='solidity-api'>Solidity API</h1>
+<p>Please refer to the documentation of the solidity API <a href="https://github.com/bluzelle/eth-oracle">here</a>.</p>
 <h1 id='websocket-api'>WebSocket API</h1>
 <p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
 
