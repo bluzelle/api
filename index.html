@@ -289,6 +289,20 @@
           </li>
           <li>
             <a href="#solidity-api" class="toc-h1 toc-link" data-title="solidity-api">Solidity API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#importing" class="toc-h2 toc-link" data-title="importing">Importing</a>
+                  </li>
+                  <li>
+                    <a href="#usage" class="toc-h2 toc-link" data-title="usage">Usage</a>
+                  </li>
+                  <li>
+                    <a href="#caveats" class="toc-h2 toc-link" data-title="caveats">Caveats</a>
+                  </li>
+                  <li>
+                    <a href="#sample-application-2" class="toc-h2 toc-link" data-title="sample-application">Sample Application</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#websocket-api" class="toc-h1 toc-link" data-title="websocket-api">WebSocket API</a>
@@ -307,7 +321,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Bluzelle combines the sharing economy with the token economy - renting individuals&#39; computer storage space to earn tokens while dApp developers use tokens to have their dApp&#39;s data stored and manage d.</p>
+<p>Bluzelle combines the sharing economy with the token economy - renting individuals&#39; computer storage space to earn tokens while dApp developers use tokens to have their dApp&#39;s data stored and managed.</p>
 
 <p>This guide covers API for our JavaScript &amp; Python libraries, Solidity contracts, and raw WebSocket communications.</p>
 <h2 id='crud-application'>CRUD Application</h2>
@@ -326,6 +340,8 @@
 <pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
 </code></pre>
 <p>This portion of the documentation covers our <strong>JavaScript</strong> tools. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.</p>
+
+<p>See also our <a href="https://github.com/bluzelle/bluzelle-js">repository</a> on GitHub.</p>
 <h2 id='sample-application'>Sample Application</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">bluzelle</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'bluzelle'</span><span class="p">);</span>
 
 <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ws://testnet.bluzelle.com:51010'</span><span class="p">,</span> <span class="s1">'45498479-2447-47a6-8c36-efa5d251a283'</span><span class="p">);</span>
@@ -670,8 +686,111 @@ You must replace <code>UUID</code> with your personal UUID.
 <h3 id='returns-14'>Returns</h3>
 <p>A list of keys in the database.</p>
 <h1 id='solidity-api'>Solidity API</h1>
-<p>Please refer to the documentation of the solidity API <a href="https://github.com/bluzelle/eth-oracle">here</a>.</p>
-<h1 id='websocket-api'>WebSocket API</h1>
+<p>This section documents Bluzelle-Ethereum integration, provided as a Solidity file that implements a wrapper around Oraclize.</p>
+
+<p>See also our <a href="https://github.com/bluzelle/eth-oracle">repository</a> on GitHub.</p>
+<h2 id='importing'>Importing</h2><pre class="highlight javascript tab-javascript"><code><span class="kr">import</span> <span class="s2">"https://github.com/bluzelle/eth-oracle/bluzelle.sol"</span><span class="p">;</span>
+</code></pre>
+<p>To use Bluzelle in a solidity contract, first import bluzelle.sol. If you are using remix, you can do this directly with the sample on the right.</p>
+
+<p>If you are using an environment which doesn&#39;t handle that for you, you may have to download bluzelle.sol directly as well as its dependancies (<a href="https://github.com/oraclize/ethereum-api/blob/master/oraclizeAPI_0.4.sol">1</a> <a href="https://github.com/Arachnid/solidity-stringutils/blob/master/src/strings.sol">2</a>).</p>
+<h2 id='usage'>Usage</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">contract</span> <span class="nx">MyContract</span> <span class="nx">is</span> <span class="nx">BluzelleClient</span> <span class="p">{</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</code></pre>
+<p>To use the Bluzelle interface, first have your contract extend BluzelleClient.</p>
+
+<p>Call <code>setUUID(string, uuid)</code> before making any DB calls - this configures which distinct database you connect to. Your UUID should conform to UUIDv4, such as that found <a href="https://www.uuidgenerator.net/version4">here</a>.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="nx">create</span><span class="p">(</span><span class="s2">"myKey"</span><span class="p">,</span> <span class="s2">"myValue"</span><span class="p">);</span>
+<span class="nx">read</span><span class="p">(</span><span class="s2">"myKey"</span><span class="p">);</span>
+<span class="nx">update</span><span class="p">(</span><span class="s2">"myKey"</span><span class="p">,</span> <span class="s2">"myNewValue"</span><span class="p">);</span>
+<span class="nx">remove</span><span class="p">(</span><span class="s2">"myKey"</span><span class="p">);</span>
+</code></pre>
+<p>Then, DB operations are performed with these methods.</p>
+
+<p>Each DB operation will consume a small amount of ether to pay Oraclize&#39;s fee.</p>
+<pre class="highlight javascript tab-javascript"><code><span class="c1">// When a read succeeds</span>
+<span class="kd">function</span> <span class="nx">readResult</span><span class="p">(</span><span class="nx">string</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">result</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="c1">// When a read fails</span>
+<span class="kd">function</span> <span class="nx">readFailure</span><span class="p">(</span><span class="nx">string</span> <span class="nx">key</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{...}</span>
+
+<span class="c1">// When a create, update, remove is performed</span>
+<span class="kd">function</span> <span class="nx">createResponse</span><span class="p">(</span><span class="nx">string</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{...}</span>
+<span class="kd">function</span> <span class="nx">updateResponse</span><span class="p">(</span><span class="nx">string</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{...}</span>
+<span class="kd">function</span> <span class="nx">removeResponse</span><span class="p">(</span><span class="nx">string</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{...}</span>
+</code></pre>
+<p>All database operations are performed asynchronously (this is a fundamental constraint of running in Ethereum). If you want to act on the result of your database operations (and presumably you do, at least for reads), then override some or all of the callback methods.</p>
+<h2 id='caveats'>Caveats</h2>
+<p>This should work on any network Oraclize supports: Ropsten, Kovan, and Rinkeby as well as the main net. We do not recommend it for use on the main net; it&#39;s not known to be reliable or secure enough.</p>
+
+<p>Each database transaction requires a small fee for Oraclize ($0.01 usd worth), and the transaction will fail if the contract balance is too low.</p>
+
+<p>If you neglect to set a UUID before making a DB call, you will end up using the emptry string as your UUID. This may result in Bad Things.</p>
+<h2 id='sample-application-2'>Sample Application</h2><pre class="highlight javascript tab-javascript"><code><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4</span><span class="p">.</span><span class="mi">20</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="s2">"https://github.com/bluzelle/eth-oracle/bluzelle.sol"</span><span class="p">;</span>
+
+<span class="cm">/* This is a minimal sample client that watches the value of a single key in
+ * Bluzelle */</span>
+<span class="nx">contract</span> <span class="nx">SampleClient</span> <span class="nx">is</span> <span class="nx">BluzelleClient</span> <span class="p">{</span>
+
+    <span class="nx">string</span> <span class="kr">public</span> <span class="nx">key</span><span class="p">;</span>
+    <span class="nx">string</span> <span class="kr">public</span> <span class="nx">value</span><span class="p">;</span>
+
+    <span class="nx">bool</span> <span class="kr">public</span> <span class="nx">keyExists</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="nx">address</span> <span class="kr">private</span> <span class="nx">owner</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="nx">SampleClient</span><span class="p">(</span><span class="nx">string</span> <span class="nx">_key</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">_uuid</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">bytes</span><span class="p">(</span><span class="nx">_key</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">bytes</span><span class="p">(</span><span class="nx">_uuid</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="nx">key</span> <span class="o">=</span> <span class="nx">_key</span><span class="p">;</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+        <span class="nx">setUUID</span><span class="p">(</span><span class="nx">_uuid</span><span class="p">);</span>
+        <span class="nx">create</span><span class="p">(</span><span class="nx">_key</span><span class="p">,</span> <span class="s2">"initial value"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Read the value from Bluzelle 
+    (this requires a small fee to pay Oraclize) */</span>
+    <span class="kd">function</span> <span class="nx">update</span><span class="p">()</span> <span class="kr">public</span> <span class="nx">payable</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">owner</span><span class="p">);</span>
+        <span class="nx">read</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Set the value */</span>
+    <span class="kd">function</span> <span class="nx">set</span><span class="p">(</span><span class="nx">string</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">payable</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">owner</span><span class="p">);</span>
+        <span class="nx">update</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* callback invoked by bluzelle upon read */</span>
+    <span class="kd">function</span> <span class="nx">readResult</span><span class="p">(</span><span class="nx">string</span> <span class="cm">/*unused*/</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">v</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{</span>
+        <span class="nx">value</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* callback invoked by bluzelle upon create */</span>
+    <span class="kd">function</span> <span class="nx">createResponse</span><span class="p">(</span><span class="nx">string</span> <span class="cm">/*unused*/</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">success</span><span class="p">){</span>
+            <span class="nx">keyExists</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* callback invoked by bluzelle upon delete */</span>
+    <span class="kd">function</span> <span class="nx">removeResponse</span><span class="p">(</span><span class="nx">string</span> <span class="cm">/*unusued*/</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">success</span><span class="p">){</span>
+            <span class="nx">keyExists</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">refund</span><span class="p">()</span> <span class="kr">public</span> <span class="nx">payable</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">owner</span><span class="p">);</span>
+        <span class="nx">remove</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+        <span class="nx">owner</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">balance</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre><h1 id='websocket-api'>WebSocket API</h1>
 <p>The <em>Bluzelle</em> architecture consists of a request-response system through WebSockets.</p>
 
 <blockquote>
