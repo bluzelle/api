@@ -13,7 +13,7 @@ search: true
 
 # Introduction
 
-Bluzelle combines the sharing economy with the token economy - renting individuals' computer storage space to earn tokens while dApp developers use tokens to have their dApp's data stored and manage d.
+Bluzelle combines the sharing economy with the token economy - renting individuals' computer storage space to earn tokens while dApp developers use tokens to have their dApp's data stored and managed.
 
 This guide covers API for our JavaScript & Python libraries, Solidity contracts, and raw WebSocket communications.
 
@@ -43,6 +43,8 @@ const bluzelle = require('bluzelle');
 ```
 
 This portion of the documentation covers our **JavaScript** tools. Each function in the JavaScript API wraps a request-response pair in the WebSocket API.
+
+See also our [repository](https://github.com/bluzelle/bluzelle-js) on GitHub.
 
 
 
@@ -490,8 +492,138 @@ A list of keys in the database.
 
 # Solidity API
 
-Please refer to the documentation of the solidity API [here](https://github.com/bluzelle/eth-oracle).
+This section documents Bluzelle-Ethereum integration, provided as a Solidity file that implements a wrapper around Oraclize.
 
+See also our [repository](https://github.com/bluzelle/eth-oracle) on GitHub.
+
+
+## Importing
+
+```javascript
+import "https://github.com/bluzelle/eth-oracle/bluzelle.sol";
+```
+
+To use Bluzelle in a solidity contract, first import bluzelle.sol. If you are using remix, you can do this directly with the sample on the right.
+
+If you are using an environment which doesn't handle that for you, you may have to download bluzelle.sol directly as well as its dependancies ([1](https://github.com/oraclize/ethereum-api/blob/master/oraclizeAPI_0.4.sol) [2](https://github.com/Arachnid/solidity-stringutils/blob/master/src/strings.sol
+)).
+
+
+## Usage
+
+```javascript
+contract MyContract is BluzelleClient {
+  ...
+}
+```
+
+To use the Bluzelle interface, first have your contract extend BluzelleClient.
+
+Call `setUUID(string, uuid)` before making any DB calls - this configures which distinct database you connect to. Your UUID should conform to UUIDv4, such as that found [here](https://www.uuidgenerator.net/version4).
+
+
+```javascript
+create("myKey", "myValue");
+read("myKey");
+update("myKey", "myNewValue");
+remove("myKey");
+```
+
+Then, DB operations are performed with these methods.
+
+Each DB operation will consume a small amount of ether to pay Oraclize's fee.
+
+```javascript
+// When a read succeeds
+function readResult(string key, string result) internal { ... }
+
+// When a read fails
+function readFailure(string key) internal {...}
+
+// When a create, update, remove is performed
+function createResponse(string key, bool success) internal {...}
+function updateResponse(string key, bool success) internal {...}
+function removeResponse(string key, bool success) internal {...}
+```
+
+All database operations are performed asynchronously (this is a fundamental constraint of running in Ethereum). If you want to act on the result of your database operations (and presumably you do, at least for reads), then override some or all of the callback methods.
+
+## Caveats
+
+This should work on any network Oraclize supports: Ropsten, Kovan, and Rinkeby as well as the main net. We do not recommend it for use on the main net; it's not known to be reliable or secure enough.
+
+Each database transaction requires a small fee for Oraclize ($0.01 usd worth), and the transaction will fail if the contract balance is too low.
+
+If you neglect to set a UUID before making a DB call, you will end up using the emptry string as your UUID. This may result in Bad Things.
+
+
+## Sample Application
+
+```javascript
+pragma solidity ^0.4.20;
+
+import "https://github.com/bluzelle/eth-oracle/bluzelle.sol";
+
+/* This is a minimal sample client that watches the value of a single key in
+ * Bluzelle */
+contract SampleClient is BluzelleClient {
+
+    string public key;
+    string public value;
+    
+    bool public keyExists = false;
+
+    address private owner = msg.sender;
+
+    function SampleClient(string _key, string _uuid) public {
+        require(bytes(_key).length > 0);
+        require(bytes(_uuid).length > 0);
+        key = _key;
+        owner = msg.sender;
+        setUUID(_uuid);
+        create(_key, "initial value");
+    }
+
+    /* Read the value from Bluzelle 
+    (this requires a small fee to pay Oraclize) */
+    function update() public payable {
+        require(msg.sender == owner);
+        read(key);
+    }
+    
+    /* Set the value */
+    function set(string _value) public payable {
+        require(msg.sender == owner);
+        update(key, _value);
+    }
+
+    /* callback invoked by bluzelle upon read */
+    function readResult(string /*unused*/, string v) internal {
+        value = v;
+    }
+    
+    /* callback invoked by bluzelle upon create */
+    function createResponse(string /*unused*/, bool success) internal {
+        if(success){
+            keyExists = true;
+        }
+    }
+    
+    /* callback invoked by bluzelle upon delete */
+    function removeResponse(string /*unusued*/, bool success) internal {
+        if(success){
+            keyExists = false;
+        }
+    }
+
+    function refund() public payable {
+        require(msg.sender == owner);
+        remove(key);
+        owner.transfer(address(this).balance);
+    }
+}
+
+```
 
 
 
