@@ -85,10 +85,6 @@ bluzelle.connect('ws://1.2.3.4:51010', '96764e2f-2273-4404-97c0-a05b5e36ea66');
 ```
 
 
-```python
-b = pyBluzelle.create_connection("127.0.0.1", 51011, "137a8403-52ec-43b7-8083-91391d4c5e67")
-```
-
 Configures the address, port, and UUID of the connection. This may be called multiple times, and between other API calls.
 
 *Bluzelle* uses `UUID`'s to identify distinct databases on a single swarm. We recommend using <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 of the universally unique identifier</a>.
