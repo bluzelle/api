@@ -119,14 +119,14 @@ await bluzelle.create('mykey', { a: 13 });
 ```
 
 
-Creates a field. *Bluzelle* supports JavaScript types that are `JSON`-serializable (strings, objects, numbers, booleans, arrays, and combinations theereof) and also serial data in the form of an <a href="">ArrayBuffer</a>. Functions are not valid.
+Creates a field. *Bluzelle* only supports string types.
 
 
 
 Argument  | Description
 ----------|------------
 key       | The name of the key
-value     | The value to set the key
+value     | The string value to set the key
 
 
 ### Returns
@@ -173,22 +173,10 @@ Fails when a response is not recieved or the key does not exist in the database.
 
 ```javascript
 // promise syntax
-bluzelle.update('mykey', { a: 13 }).then(() => { ... }, error => { ... });
+bluzelle.update('mykey', '{ a: 13 }').then(() => { ... }, error => { ... });
 
 // async/await syntax
-await bluzelle.update('mykey', { a: 13 });
-```
-
-
-> Serial data example.
-
-```javascript
-
-const arr = new Uint8Array(1000);
-
-// Fill arr with data
-
-await bluzelle.update('mykey', arr);
+await bluzelle.update('mykey', '{ a: 13 }');
 ```
 
 
@@ -198,7 +186,7 @@ Update a field in the database.
 Argument  | Description
 ----------|------------
 key       | The name of the key to query
-value     | The value to set the key
+value     | The string value to set the key
 
 
 ### Returns
