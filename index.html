@@ -390,10 +390,10 @@
 You must replace <code>UUID</code> with your personal UUID.
 </aside>
 <h2 id='create-key-value'>create(key, value)</h2><pre class="highlight javascript tab-javascript"><code><span class="c1">// promise syntax</span>
-<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
+<span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="s1">'{ a: 13 }'</span><span class="p">).</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">},</span> <span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="p">...</span> <span class="p">});</span>
 
 <span class="c1">// async/await syntax</span>
-<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">13</span> <span class="p">});</span>
+<span class="nx">await</span> <span class="nx">bluzelle</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'mykey'</span><span class="p">,</span> <span class="s1">'{ a: 13 }'</span><span class="p">);</span>
 </code></pre>
 <p>Creates a field. <em>Bluzelle</em> only supports string types.</p>
 
